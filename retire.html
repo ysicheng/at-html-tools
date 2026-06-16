@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RetireSG — Singapore Retirement Planner | paulysc.com</title>
+<meta name="description" content="A plain-English Singapore retirement calculator. Check if your CPF, savings and investments will last — built for 2026 rules. Free, runs in your browser, nothing sent anywhere.">
+<meta property="og:title" content="RetireSG — Singapore Retirement Planner">
+<meta property="og:description" content="Check whether your CPF, savings and investments will fund your retirement. Built for Singapore 2026 rules. Free and private — everything runs in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://paulysc.com/retire.html">
+<link rel="canonical" href="https://paulysc.com/retire.html">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+ --bg:#080f1a; --surface:#0d1927; --card:#111f33; --card2:#0f1b2c;
+ --border:#1c3352; --border2:#26456b;
+ --gold:#c8933a; --gold2:#e8b55a; --gold-faint:rgba(200,147,58,0.10);
+ --teal:#2cbfb3; --green:#27ae60; --red:#e0584e; --blue:#5b8dee;
+ --text:#dce8f5; --text2:#8aa6c6; --text3:#516c8e;
+ --radius:14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'DM Sans',sans-serif;background:
+ radial-gradient(1200px 600px at 50% -200px, #102036 0%, transparent 60%),
+ var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+input{font-family:inherit}
+button{font-family:inherit;cursor:pointer}
+.app{max-width:1080px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+
+/* ---------- Back link ---------- */
+.backbar{padding:12px 18px 0;display:flex;align-items:center;gap:8px}
+.backlink{font-size:12px;font-weight:600;color:var(--text3);text-decoration:none;
+ display:flex;align-items:center;gap:5px;transition:.15s}
+.backlink:hover{color:var(--gold2)}
+.backlink::before{content:'←'}
+
+/* ---------- Header ---------- */
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:16px 18px 14px;border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.brand .logo{font-family:'Playfair Display',serif;font-size:25px;font-weight:800;
+ color:var(--gold2);letter-spacing:-0.5px;line-height:1}
+.brand .tag{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:.3px}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.pill{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;
+ padding:6px 11px;border-radius:30px;border:1px solid var(--border2);background:var(--card);white-space:nowrap}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+.pill.ok{border-color:rgba(44,191,179,.4);color:var(--teal)}
+.pill.ok .dot{background:var(--teal);box-shadow:0 0 8px var(--teal)}
+.pill.warn{border-color:rgba(224,88,78,.45);color:var(--red)}
+.pill.warn .dot{background:var(--red);box-shadow:0 0 8px var(--red)}
+.help-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border2);
+ background:var(--card);color:var(--text2);font-size:15px;font-weight:700;display:flex;
+ align-items:center;justify-content:center;transition:.15s}
+.help-btn:hover{color:var(--gold2);border-color:var(--gold)}
+
+/* ---------- Mode toggle ---------- */
+.modebar{padding:14px 18px 0}
+.mode-toggle{display:flex;background:var(--card);border:1px solid var(--border);
+ border-radius:11px;padding:5px;gap:5px;max-width:440px;margin:0 auto}
+.mode-btn{flex:1;border:none;background:transparent;color:var(--text2);
+ border-radius:8px;padding:10px 8px;text-align:center;transition:.18s}
+.mode-btn .mb-t{font-size:13px;font-weight:700;display:block;line-height:1.1}
+.mode-btn .mb-s{font-size:10px;font-weight:500;opacity:.75}
+.mode-btn.active{background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
+ color:#1a1206;box-shadow:0 3px 12px rgba(200,147,58,.3)}
+.mode-btn.active .mb-s{opacity:.8}
+
+/* ---------- Tab nav ---------- */
+.tabnav{display:flex;gap:4px;padding:14px 18px 0;overflow-x:auto;scrollbar-width:none}
+.tabnav::-webkit-scrollbar{display:none}
+.tab-btn{flex:1;min-width:78px;border:1px solid var(--border);background:var(--card);
+ color:var(--text2);border-radius:10px 10px 0 0;border-bottom:none;padding:11px 6px;
+ display:flex;flex-direction:column;align-items:center;gap:3px;transition:.15s}
+.tab-btn .ti{font-size:17px;line-height:1}
+.tab-btn .tl{font-size:11px;font-weight:600}
+.tab-btn.active{background:var(--card2);color:var(--gold2);border-color:var(--border2)}
+.tab-btn.active .tl{color:var(--gold2)}
+
+/* ---------- Panels ---------- */
+.panels{flex:1;padding:0 14px 40px;border-top:1px solid var(--border2);margin-top:-1px}
+.panel{display:none;padding-top:18px}
+.panel.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.sect{font-size:10px;font-weight:700;letter-spacing:1.3px;color:var(--text3);
+ text-transform:uppercase;margin:22px 4px 9px;display:flex;align-items:center;gap:7px}
+.sect:first-child{margin-top:4px}
+.sect .ln{flex:1;height:1px;background:var(--border)}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+ overflow:hidden;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border)}
+.field{background:var(--card);padding:13px 14px 12px}
+.field label{display:flex;align-items:center;font-size:10px;font-weight:700;
+ color:var(--text2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px}
+.iw{display:flex;align-items:center;gap:5px;border-bottom:1px solid transparent}
+.iw .pfx{font-size:15px;color:var(--text3);font-weight:600}
+.iw input{flex:1;width:100%;background:transparent;border:none;outline:none;color:var(--text);
+ font-size:18px;font-weight:600;-moz-appearance:textfield}
+.iw input::-webkit-outer-spin-button,.iw input::-webkit-inner-spin-button{-webkit-appearance:none}
+.iw .sfx{font-size:13px;color:var(--gold);font-weight:600}
+.computed{font-size:11.5px;color:var(--teal);font-weight:600;margin-top:6px}
+
+/* segmented controls */
+.seg{display:flex;background:var(--card);border:1px solid var(--border);border-radius:10px;
+ padding:4px;gap:4px;margin-bottom:12px}
+.seg button{flex:1;border:none;background:transparent;color:var(--text2);font-size:11.5px;
+ font-weight:700;padding:9px 4px;border-radius:7px;letter-spacing:.3px;transition:.15s}
+.seg button.active{background:var(--card2);color:var(--gold2);border:1px solid var(--gold);
+ box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.seg button.danger.active{color:var(--red);border-color:var(--red)}
+
+/* asset rows */
+.silo-head{display:flex;align-items:center;gap:11px;padding:13px 14px;border-bottom:1px solid var(--border)}
+.silo-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;
+ justify-content:center;font-size:17px;flex-shrink:0}
+.silo-t{font-size:14px;font-weight:700}
+.silo-s{font-size:11px;color:var(--text2);margin-top:1px}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;
+ padding:11px 14px;border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:none}
+.row-l{font-size:12.5px;color:var(--text2);font-weight:600;display:flex;align-items:center}
+.row-c{display:flex;align-items:center;gap:8px}
+.row-v{display:flex;align-items:center;background:rgba(255,255,255,.04);
+ border:1px solid var(--border2);border-radius:9px;padding:8px 11px;gap:5px;min-width:130px}
+.row-v .pfx{font-size:13px;color:var(--text3);font-weight:600}
+.row-v input{flex:1;width:100%;min-width:0;background:transparent;border:none;outline:none;
+ color:var(--text);font-size:15px;font-weight:600;-moz-appearance:textfield}
+.row-v input::-webkit-outer-spin-button,.row-v input::-webkit-inner-spin-button{-webkit-appearance:none}
+.row-r{display:flex;align-items:center;background:var(--gold-faint);
+ border:1px solid rgba(200,147,58,.25);border-radius:9px;padding:8px 7px;gap:3px;width:74px}
+.row-r input{width:42px;background:transparent;border:none;outline:none;color:var(--gold2);
+ font-size:13px;font-weight:700;text-align:right;-moz-appearance:textfield}
+.row-r .sfx{font-size:11px;color:var(--gold);font-weight:600}
+.rate-fixed{display:flex;align-items:center;justify-content:center;background:rgba(91,141,238,.10);
+ border:1px solid rgba(91,141,238,.25);border-radius:9px;padding:8px;width:74px;font-size:12px;
+ color:var(--blue);font-weight:700}
+
+/* ---------- Results ---------- */
+.status{display:flex;align-items:center;gap:13px;border-radius:var(--radius);padding:16px 17px;margin-bottom:14px;
+ background:linear-gradient(135deg,rgba(44,191,179,.14),rgba(20,80,90,.20));border:1px solid rgba(44,191,179,.3)}
+.status.warn{background:linear-gradient(135deg,rgba(224,88,78,.14),rgba(90,30,28,.20));border-color:rgba(224,88,78,.35)}
+.status .ic{font-size:30px;flex-shrink:0;line-height:1}
+.status .st{font-size:16px;font-weight:700;color:var(--teal)}
+.status.warn .st{color:var(--red)}
+.status .ss{font-size:12.5px;color:var(--text2);margin-top:3px;line-height:1.45}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 15px}
+.stat .sl{font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--text2);
+ text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center}
+.stat .sv{font-size:23px;font-weight:600;font-family:'Playfair Display',serif;line-height:1}
+.stat .sx{font-size:11px;color:var(--text3);font-weight:500;margin-top:5px}
+.chartcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+ padding:16px 12px 12px;margin-bottom:14px}
+.chartcard h4{font-size:11px;font-weight:700;letter-spacing:.6px;color:var(--text2);
+ text-transform:uppercase;text-align:center;margin-bottom:6px}
+.chart-wrap{position:relative;height:280px}
+.legend{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:10px}
+.legend span{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);font-weight:600}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.readout{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 17px}
+.readout h4{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:11px}
+.readout .line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--border);
+ font-size:13px}
+.readout .line:last-child{border-bottom:none}
+.readout .line b{font-weight:700;color:var(--text)}
+.readout .k{color:var(--text2)}
+
+/* ---------- Guide ---------- */
+.guide{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+ padding:18px 18px 6px;margin-bottom:12px;font-size:13.5px;color:var(--text2);line-height:1.65}
+.guide h3{font-family:'Playfair Display',serif;color:var(--gold2);font-size:18px;font-weight:700;
+ margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.guide h4{color:var(--teal);font-size:13px;font-weight:700;margin:15px 0 5px;letter-spacing:.2px}
+.guide p{margin-bottom:12px}
+.guide ul{margin:0 0 12px 18px}
+.guide li{margin-bottom:7px}
+.guide strong{color:var(--text)}
+.guide .src{display:inline-block;font-size:11px;color:var(--gold);font-weight:600;
+ background:var(--gold-faint);padding:1px 7px;border-radius:5px}
+
+/* ---------- Tooltip ---------- */
+.tt{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;
+ border-radius:50%;background:rgba(91,141,238,.2);color:var(--blue);font-size:9px;font-weight:800;
+ cursor:help;margin-left:6px;flex-shrink:0}
+.ttbox{position:fixed;z-index:9999;background:#07111f;border:1px solid var(--border2);
+ border-radius:11px;padding:11px 13px;font-size:12px;color:var(--text);line-height:1.55;
+ max-width:min(280px,calc(100vw - 24px));display:none;box-shadow:0 14px 36px rgba(0,0,0,.7)}
+
+/* ---------- Welcome overlay ---------- */
+.overlay{position:fixed;inset:0;z-index:10000;background:rgba(4,8,14,.82);backdrop-filter:blur(5px);
+ display:flex;align-items:center;justify-content:center;padding:18px;animation:fade .3s}
+.welcome{background:var(--surface);border:1px solid var(--border2);border-radius:18px;
+ max-width:480px;width:100%;max-height:90vh;overflow-y:auto;padding:26px 24px 22px;
+ box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.welcome .wlogo{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:var(--gold2);
+ text-align:center;line-height:1}
+.welcome .wsub{text-align:center;color:var(--text2);font-size:13px;margin:6px 0 20px}
+.welcome .step{display:flex;gap:13px;margin-bottom:16px}
+.welcome .num{width:28px;height:28px;border-radius:8px;background:var(--gold-faint);
+ border:1px solid rgba(200,147,58,.3);color:var(--gold2);font-weight:700;font-size:13px;
+ display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.welcome .step b{color:var(--text);font-size:13.5px;font-weight:700}
+.welcome .step p{color:var(--text2);font-size:12.5px;line-height:1.5;margin-top:2px}
+.welcome .wbtn{width:100%;border:none;border-radius:11px;padding:14px;font-size:14px;font-weight:700;
+ background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1206;margin-top:6px;
+ box-shadow:0 4px 16px rgba(200,147,58,.3)}
+.welcome .wnote{text-align:center;font-size:11px;color:var(--text3);margin-top:12px;line-height:1.5}
+
+/* ---------- Responsive ---------- */
+@media(min-width:760px){
+ .grid.g2{grid-template-columns:1fr 1fr}
+ .grid.g3{grid-template-columns:1fr 1fr 1fr}
+ .stats{grid-template-columns:repeat(4,1fr)}
+ .results-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;align-items:start}
+ .results-layout .chartcard{margin-bottom:0}
+ .chart-wrap{height:330px}
+ .hdr{padding:20px 24px 16px}
+ .panels{padding:0 20px 50px}
+}
+@media(max-width:759px){
+ .grid.g2,.grid.g3{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr 1fr}
+ .row-r{width:64px}.row-r input{width:34px}
+ .row-v{min-width:110px}
+ .brand .tag{display:none}
+}
+.adv-only{display:none}
+body.adv .adv-only{display:block}
+body.adv .grid.g2{grid-template-columns:1fr}
+@media(min-width:760px){body.adv .grid.g2{grid-template-columns:1fr 1fr}body.adv .grid.g3{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body id="body">
+
+<div class="ttbox" id="ttbox"></div>
+
+<!-- Welcome -->
+<div class="overlay" id="overlay">
+ <div class="welcome">
+ <div class="wlogo">RetireSG</div>
+ <div class="wsub">A plain-English check on whether your money will last in retirement — built for Singapore.</div>
+ <div class="step"><div class="num">1</div><div><b>Pick a mode</b><p>Start with <strong>Simple Check</strong> (7 quick inputs, ~1 min). Switch to <strong>Advanced Plan</strong> later for property, SRS, stress tests and couples.</p></div></div>
+ <div class="step"><div class="num">2</div><div><b>Grab your real numbers</b><p>CPF balances: <strong>Singpass app → CPF</strong>. Monthly spending: your <strong>bank app's expense tracker</strong> (DBS NAV / OCBC / UOB). Salary: your latest payslip.</p></div></div>
+ <div class="step"><div class="num">3</div><div><b>Read your result</b><p>The <strong>Results</strong> tab tells you if you're funded, what age your cash might run out, and your estimated CPF LIFE payout from 65.</p></div></div>
+ <button class="wbtn" onclick="closeWelcome()">Start planning →</button>
+ <div class="wnote">Estimates only, using 2026 CPF rules. Not financial advice. Nothing you enter leaves your device.</div>
+ </div>
+</div>
+
+<div class="app">
+ <div class="backbar"><a class="backlink" href="finance.html">Back to Finance</a></div>
+
+ <!-- Header -->
+ <div class="hdr">
+ <div class="brand">
+ <span class="logo">RetireSG</span>
+ <span class="tag">Singapore Retirement Planner · 2026 rules</span>
+ </div>
+ <div class="hdr-right">
+ <div class="pill ok" id="statuspill"><span class="dot"></span><span id="pilltext">Funded</span></div>
+ <button class="help-btn" onclick="openWelcome()" title="How to use">?</button>
+ </div>
+ </div>
+
+ <!-- Mode -->
+ <div class="modebar">
+ <div class="mode-toggle">
+ <button class="mode-btn active" id="m-simple" onclick="setMode('simple')">
+ <span class="mb-t">Simple Check</span><span class="mb-s">Key inputs · 1 min</span></button>
+ <button class="mode-btn" id="m-adv" onclick="setMode('advanced')">
+ <span class="mb-t">Advanced Plan</span><span class="mb-s">Full model · 10 min</span></button>
+ </div>
+ </div>
+
+ <!-- Tabs -->
+ <div class="tabnav">
+ <button class="tab-btn active" data-tab="plan" onclick="setTab('plan',this)"><span class="ti">🧭</span><span class="tl">Plan</span></button>
+ <button class="tab-btn" data-tab="money" onclick="setTab('money',this)"><span class="ti">💼</span><span class="tl">Money</span></button>
+ <button class="tab-btn" data-tab="results" onclick="setTab('results',this)"><span class="ti">📊</span><span class="tl">Results</span></button>
+ <button class="tab-btn" data-tab="guide" onclick="setTab('guide',this)"><span class="ti">📖</span><span class="tl">Guide</span></button>
+ </div>
+
+ <div class="panels">
+
+ <!-- ============ PLAN ============ -->
+ <div class="panel active" id="p-plan">
+ <div class="adv-only">
+ <div class="sect">Planning for<span class="ln"></span></div>
+ <div class="seg">
+ <button class="active" id="hh-single" onclick="setHousehold('single')">Just me</button>
+ <button id="hh-couple" onclick="setHousehold('couple')">Me + partner (household)</button>
+ </div>
+ </div>
+
+ <div class="sect">Your timeline<span class="ln"></span></div>
+ <div class="card"><div class="grid g2">
+ <div class="field"><label>Current age <i class="tt" data-tip="Your age today. Drives how many years of saving and compounding you have left.">i</i></label>
+ <div class="iw"><input type="number" id="age" value="40"><span class="sfx">yrs</span></div></div>
+ <div class="field"><label>Stop working at <i class="tt" data-tip="The age you plan to stop earning a salary. Singapore's statutory retirement age is 64 (rising to 65); re-employment to 69.">i</i></label>
+ <div class="iw"><input type="number" id="retireAge" value="63"><span class="sfx">yrs</span></div>
+ <div class="computed" id="yrsLeft">23 yrs to go</div></div>
+ <div class="field adv-only"><label>Plan until age <i class="tt" data-tip="How long to run the projection. CPF's Basic Retirement Sum assumes savings last to about 95. Many plan to 90.">i</i></label>
+ <div class="iw"><input type="number" id="endAge" value="90"><span class="sfx">yrs</span></div></div>
+ <div class="field adv-only"><label>Legacy target <i class="tt" data-tip="An amount you'd like to still have at the end (e.g. to leave to family). Shown as a benchmark against your final wealth.">i</i></label>
+ <div class="iw"><span class="pfx">$</span><input type="number" id="legacy" value="0"></div></div>
+ </div></div>
+
+ <div class="sect">Income &amp; spending<span class="ln"></span></div>
+ <div class="card"><div class="grid g2">
+ <div class="field"><label>Gross monthly salary <i class="tt" data-tip="Your pay before CPF deduction. Where to find: latest payslip or IRAS Notice of Assessment ÷ 12. In couple mode, enter combined.">i</i></label>
+ <div class="iw"><span class="pfx">$</span><input type="number" id="salary" value="6000"></div>
+ <div class="computed" id="cpfNote">~$8k of pay attracts CPF</div></div>
+ <div class="field"><label>You save / invest monthly <i class="tt" data-tip="Cash you actually set aside each month into bank savings or investments (on top of CPF). A rough average is fine.">i</i></label>
+ <div class="iw"><span class="pfx">$</span><input type="number" id="saving" value="1500"></div></div>
+ <div class="field adv-only"><label>Annual bonus <i class="tt" data-tip="Typical yearly bonus in months of salary. CPF applies up to the $102,000 annual wage ceiling.">i</i></label>
+ <div class="iw"><input type="number" id="bonus" value="2" step="0.5"><span class="sfx">mths</span></div></div>
+ <div class="field adv-only"><label>Salary growth / yr <i class="tt" data-tip="Average annual pay rise until you stop working. 2–3% is a common long-run assumption.">i</i></label>
+ <div class="iw"><input type="number" id="salGrow" value="2.0" step="0.1"><span class="sfx">%</span></div></div>
+ <div class="field"><label>Target spend in retirement <i class="tt" data-tip="What you expect to spend each month in retirement, in today's dollars. Where to find: your bank app's spend tracker × 12, minus work-only costs. In couple mode, enter the household figure.">i</i></label>
+ <div class="iw"><span class="pfx">$</span><input type="number" id="spend" value="3500"></div>
+ <div class="computed" id="spendYr">$42,000 / year</div></div>
+ <div class="field adv-only"><label>Inflation / yr <i class="tt" data-tip="How fast prices rise. MAS long-run core inflation is around 2–2.5%. Higher = your spending grows faster.">i</i></label>
+ <div class="iw"><input type="number" id="infl" value="2.5" step="0.1"><span class="sfx">%</span></div></div>
+ <div class="field adv-only"><label>Other retirement income <i class="tt" data-tip="Monthly income in retirement that isn't CPF — e.g. rental, part-time work, private annuity. In today's dollars.">i</i></label>
+ <div class="iw"><span class="pfx">$</span><input type="number" id="otherInc" value="0"></div></div>
+ </div></div>
+
+ <div class="sect adv-only">Property &amp; mortgage<span class="ln"></span></div>
+ <div class="card adv-only"><div class="grid g2">
+ <div class="field"><label>Home value <i class="tt" data-tip="Current market value of your home. Where to find: HDB Resale Flat Prices portal, or PropertyGuru / 99.co estimates. Counts toward legacy, not spending money.">i</i></label>
+ <div class="iw"><span class="pfx">$</span><input type="number" id="propVal" value="600000"></div></div>
+ <div class="field"><label>Home growth / yr <i class="tt" data-tip="Assumed property appreciation. A conservative long-run figure is 1–2%.">i</i></label>
+ <div class="iw"><input type="number" id="propGrow" value="1.5" step="0.1"><span class="sfx">%</span></div></div>
+ <div class="field"><label>Mortgage / yr <i class="tt" data-tip="Total annual housing loan repayment (cash + CPF OA). Set 0 if fully paid.">i</i></label>
+ <div class="iw"><span class="pfx">$</span><input type="number" id="mortAmt" value="0"></div></div>
+ <div class="field"><label>Loan ends at age <i class="tt" data-tip="The age your mortgage is fully repaid.">i</i></label>
+ <div class="iw"><input type="number" id="mortEnd" value="60"><span class="sfx">yrs</span></div></div>
+ </div></div>
+ </div>
+
+ <!-- ============ MONEY ============ -->
+ <div class="panel" id="p-money">
+ <div class="sect">Cash &amp; investments<span class="ln"></span></div>
+ <div class="card">
+ <div class="silo-head"><div class="silo-ic" style="background:rgba(39,174,96,.16)">💵</div>
+ <div><div class="silo-t">Liquid wealth</div><div class="silo-s">Money you can spend in retirement</div></div></div>
+ <div class="row"><div class="row-l">Bank savings <i class="tt" data-tip="Cash in your bank accounts. Where to find: sum of your DBS/OCBC/UOB balances.">i</i></div>
+ <div class="row-c"><div class="row-v"><span class="pfx">$</span><input type="number" id="cash" value="80000"></div>
+ <div class="row-r adv-only"><input type="number" id="cashR" value="0.5"><span class="sfx">%</span></div></div></div>
+ <div class="row"><div class="row-l">Investments <i class="tt" data-tip="Stocks, ETFs, REITs, robo-advisors, unit trusts. Where to find: your brokerage / Endowus / Syfe app. In Simple mode this grows at 4%/yr.">i</i></div>
+ <div class="row-c"><div class="row-v"><span class="pfx">$</span><input type="number" id="invest" value="120000"></div>
+ <div class="row-r adv-only"><input type="number" id="investR" value="5.0"><span class="sfx">%</span></div></div></div>
+ </div>
+
+ <div class="sect adv-only">SRS account<span class="ln"></span></div>
+ <div class="card adv-only">
+ <div class="silo-head"><div class="silo-ic" style="background:rgba(232,181,90,.16)">🔒</div>
+ <div><div class="silo-t">SRS holdings</div><div class="silo-s">Tax-deferred · penalty-free withdrawal from 62→72</div></div></div>
+ <div class="row"><div class="row-l">SRS balance <i class="tt" data-tip="Supplementary Retirement Scheme. Where to find: your bank app under Wealth → SRS. Withdrawn in the waterfall after cash, from age 62.">i</i></div>
+ <div class="row-c"><div class="row-v"><span class="pfx">$</span><input type="number" id="srs" value="0"></div>
+ <div class="row-r"><input type="number" id="srsR" value="4.0"><span class="sfx">%</span></div></div></div>
+ </div>
+
+ <div class="sect">CPF accounts<span class="ln"></span></div>
+ <div class="card">
+ <div class="silo-head"><div class="silo-ic" style="background:rgba(91,141,238,.16)">🏛️</div>
+ <div><div class="silo-t">CPF balances</div><div class="silo-s">From Singpass app → CPF. In couple mode, enter combined.</div></div></div>
+ <div class="row"><div class="row-l">OA balance <i class="tt" data-tip="Ordinary Account. Earns 2.5%. Used for housing; withdrawable from 65 in this model.">i</i></div>
+ <div class="row-c"><div class="row-v"><span class="pfx">$</span><input type="number" id="oa" value="90000"></div>
+ <div class="rate-fixed adv-only">2.5%</div></div></div>
+ <div class="row"><div class="row-l">SA balance <i class="tt" data-tip="Special Account. Earns 4%. Closes at 55 — its savings move to your Retirement Account up to the Full Retirement Sum.">i</i></div>
+ <div class="row-c"><div class="row-v"><span class="pfx">$</span><input type="number" id="sa" value="100000"></div>
+ <div class="rate-fixed adv-only">4.0%</div></div></div>
+ <div class="row adv-only"><div class="row-l" style="color:var(--teal)">RA balance <i class="tt" data-tip="Retirement Account — only exists from age 55. Leave at 0 if you're under 55; the tool creates it for you.">i</i></div>
+ <div class="row-c"><div class="row-v"><span class="pfx">$</span><input type="number" id="ra" value="0"></div>
+ <div class="rate-fixed" style="color:var(--teal)">4.0%</div></div></div>
+ <div class="row adv-only"><div class="row-l">MediSave (MA) <i class="tt" data-tip="MediSave Account. Earns 4%, capped at the Basic Healthcare Sum ($79,000 in 2026). For healthcare, not general spending.">i</i></div>
+ <div class="row-c"><div class="row-v"><span class="pfx">$</span><input type="number" id="ma" value="60000"></div>
+ <div class="rate-fixed">4.0%</div></div></div>
+ </div>
+
+ <div class="sect adv-only">CPF LIFE top-up<span class="ln"></span></div>
+ <div class="adv-only">
+ <div class="seg">
+ <button class="active" id="ra-none" onclick="setRaTarget('none')">No top-up</button>
+ <button id="ra-frs" onclick="setRaTarget('frs')">Top up to FRS</button>
+ <button id="ra-ers" onclick="setRaTarget('ers')">Top up to ERS</button>
+ </div>
+ <div style="font-size:12px;color:var(--text3);padding:0 4px 4px;line-height:1.5">
+ At 55, set aside more in your Retirement Account for bigger lifelong payouts. <b style="color:var(--text2)">FRS $220,400</b> → ~$1,730/mth · <b style="color:var(--text2)">ERS $440,800</b> → ~$3,340/mth (2026).
+ </div>
+ </div>
+ </div>
+
+ <!-- ============ RESULTS ============ -->
+ <div class="panel" id="p-results">
+ <div class="status" id="status">
+ <div class="ic" id="statusIc">✅</div>
+ <div><div class="st" id="statusT">Fully funded</div><div class="ss" id="statusS">Your savings cover your retirement spending.</div></div>
+ </div>
+
+ <div class="adv-only">
+ <div class="sect">Stress test<span class="ln"></span></div>
+ <div class="seg">
+ <button class="active" id="sc-base" onclick="setScenario('base')">Base case</button>
+ <button id="sc-bear" onclick="setScenario('bear')">Bear market</button>
+ <button id="sc-sorr" class="danger" onclick="setScenario('sorr')">Crash at retirement</button>
+ </div>
+ </div>
+
+ <div class="stats">
+ <div class="stat"><div class="sl">CPF LIFE payout <i class="tt" data-tip="Estimated monthly CPF LIFE income for life, starting at 65, based on your Retirement Account at 65 (Standard Plan).">i</i></div>
+ <div class="sv" style="color:var(--blue)" id="st-life">—</div><div class="sx">/month from age 65</div></div>
+ <div class="stat"><div class="sl">Money lasts until <i class="tt" data-tip="The age your spendable wealth (cash, investments, SRS, and CPF OA from 65) is projected to run out. 'Beyond plan' means it lasts the whole projection.">i</i></div>
+ <div class="sv" style="color:var(--gold2)" id="st-last">—</div><div class="sx" id="st-last-x">age</div></div>
+ <div class="stat"><div class="sl">Liquid at end <i class="tt" data-tip="Spendable wealth left at the end of your projection (cash + investments + SRS + withdrawable CPF OA).">i</i></div>
+ <div class="sv" id="st-liquid">—</div><div class="sx" id="st-liquid-x">at plan-end age</div></div>
+ <div class="stat adv-only"><div class="sl">Total legacy <i class="tt" data-tip="Everything left at the end: liquid wealth + remaining CPF + home value. A rough estate figure.">i</i></div>
+ <div class="sv" style="color:var(--teal)" id="st-legacy">—</div><div class="sx" id="st-legacy-x">net worth at end</div></div>
+ </div>
+
+ <div class="results-layout">
+ <div class="chartcard">
+ <h4>Wealth trajectory</h4>
+ <div class="chart-wrap" id="chartWrap"><canvas id="chart"></canvas></div>
+ <div class="legend">
+ <span><i style="background:#27ae60"></i>Liquid wealth</span>
+ <span><i style="background:#5b8dee"></i>CPF (locked)</span>
+ <span class="adv-only"><i style="background:#c8933a"></i>Property</span>
+ </div>
+ </div>
+ <div class="readout">
+ <h4>What's driving this</h4>
+ <div id="readoutBody"></div>
+ </div>
+ </div>
+ </div>
+
+ <!-- ============ GUIDE ============ -->
+ <div class="panel" id="p-guide">
+ <div class="guide">
+ <h3>Getting started in 60 seconds</h3>
+ <p>RetireSG answers one question: <strong>will your money last in retirement?</strong> Enter your real numbers, and the Results tab shows whether you're funded, when your spendable cash might run out, and your CPF LIFE income for life.</p>
+ <h4>Where to find each number</h4>
+ <ul>
+ <li><strong>CPF balances (OA / SA / RA / MA):</strong> open the <span class="src">Singpass</span> app → tap <strong>CPF</strong>, or log in at cpf.gov.sg.</li>
+ <li><strong>Monthly spending:</strong> your bank's tracker — <span class="src">DBS NAV Planner</span>, <span class="src">OCBC</span> or <span class="src">UOB</span> insights — averaged over a few months.</li>
+ <li><strong>Salary:</strong> your latest payslip (gross, before CPF).</li>
+ <li><strong>Investments / SRS:</strong> your brokerage or robo app (Endowus, Syfe, IBKR, Tiger, etc.).</li>
+ </ul>
+ </div>
+
+ <div class="guide">
+ <h3>Simple Check vs Advanced Plan</h3>
+ <h4>🟢 Simple Check — a fast baseline</h4>
+ <p>Seven inputs, about a minute. It assumes 2.5% inflation, a 4% return on investments, standard CPF rules, and a plan to age 90 — so you can focus on the core question without the detail.</p>
+ <h4>🟡 Advanced Plan — the full model</h4>
+ <ul>
+ <li><strong>Couples:</strong> plan as a household with combined balances and doubled CPF thresholds.</li>
+ <li><strong>Property &amp; mortgage:</strong> track home value and when your loan clears.</li>
+ <li><strong>SRS &amp; per-account returns:</strong> set your own rates for cash, investments and SRS.</li>
+ <li><strong>CPF LIFE top-ups:</strong> model topping your Retirement Account to the FRS or ERS.</li>
+ <li><strong>Stress tests:</strong> a prolonged bear market, or a crash right at retirement (sequence-of-returns risk).</li>
+ <li><strong>Legacy:</strong> set an amount you'd like to leave behind.</li>
+ </ul>
+ </div>
+
+ <div class="guide">
+ <h3>The CPF terms, briefly</h3>
+ <ul>
+ <li><strong>OA / SA / MA:</strong> Ordinary (housing, 2.5%), Special (retirement, 4%), MediSave (healthcare, 4%).</li>
+ <li><strong>SA closes at 55:</strong> its savings move into a new <strong>Retirement Account (RA)</strong>, up to the Full Retirement Sum; anything extra goes to OA.</li>
+ <li><strong>BRS / FRS / ERS (2026):</strong> Basic <strong>$110,200</strong>, Full <strong>$220,400</strong>, Enhanced <strong>$440,800</strong>. The more you set aside, the larger your payout.</li>
+ <li><strong>CPF LIFE:</strong> a lifelong monthly income from age 65, based on your RA. Roughly $1,730/mth at FRS, up to ~$3,340/mth at ERS.</li>
+ <li><strong>Extra interest:</strong> +1% on your first $60k across accounts, and another +1% on the first $30k once you're 55+ — up to 6% on early dollars.</li>
+ </ul>
+ </div>
+
+ <div class="guide">
+ <h3>Assumptions &amp; honest limits</h3>
+ <p>This is a planning estimate, not advice or a guarantee. It uses 2026 CPF figures and simplifies real rules: CPF LIFE is modelled as the level Standard Plan; allocation and interest tiers are approximated; tax on income and SRS withdrawals isn't modelled; and couple mode treats your entries as household totals with doubled caps. CPF rules and retirement sums change yearly — re-check the official figures at <strong>cpf.gov.sg</strong> before making decisions. Everything runs in your browser; nothing you type is sent anywhere.</p>
+ </div>
+ </div>
+
+ </div>
+</div>
+
+<script>
+/* ---------------- Tooltip ---------------- */
+const ttbox=document.getElementById('ttbox');
+function showTip(el){
+ ttbox.textContent=el.dataset.tip; ttbox.style.display='block';
+ const r=el.getBoundingClientRect();
+ let top=r.top-ttbox.offsetHeight-9;
+ if(top<8) top=r.bottom+9;
+ ttbox.style.top=top+'px';
+ ttbox.style.left=Math.max(10,Math.min(r.left-6,window.innerWidth-ttbox.offsetWidth-10))+'px';
+}
+function bindTips(){
+ document.querySelectorAll('.tt').forEach(el=>{
+ if(el._b)return; el._b=1;
+ el.addEventListener('mouseenter',()=>showTip(el));
+ el.addEventListener('mouseleave',()=>ttbox.style.display='none');
+ el.addEventListener('click',e=>{e.stopPropagation();ttbox.style.display==='block'?ttbox.style.display='none':showTip(el);});
+ });
+}
+document.addEventListener('click',()=>ttbox.style.display='none');
+bindTips();
+
+/* ---------------- Welcome ---------------- */
+function closeWelcome(){document.getElementById('overlay').style.display='none';}
+function openWelcome(){document.getElementById('overlay').style.display='flex';}
+
+/* ---------------- UI state ---------------- */
+let MODE='simple', TAB='plan', HOUSEHOLD='single', RA_TARGET='none', SCENARIO='base';
+
+function setMode(m){
+ MODE=m;
+ document.getElementById('m-simple').classList.toggle('active',m==='simple');
+ document.getElementById('m-adv').classList.toggle('active',m==='advanced');
+ document.body.classList.toggle('adv',m==='advanced');
+ if(m==='simple'){HOUSEHOLD='single';RA_TARGET='none';SCENARIO='base';
+ document.getElementById('hh-single')&&setHousehold('single');
+ document.getElementById('ra-none')&&setRaTarget('none');
+ document.getElementById('sc-base')&&setScenario('base');}
+ run();
+}
+function setTab(t,btn){
+ TAB=t;
+ document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+ document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+ document.getElementById('p-'+t).classList.add('active');
+ btn.classList.add('active');
+ if(t==='results') run();
+}
+function setHousehold(h){HOUSEHOLD=h;
+ document.getElementById('hh-single').classList.toggle('active',h==='single');
+ document.getElementById('hh-couple').classList.toggle('active',h==='couple');run();}
+function setRaTarget(t){RA_TARGET=t;
+ ['none','frs','ers'].forEach(x=>document.getElementById('ra-'+x).classList.toggle('active',x===t));run();}
+function setScenario(s){SCENARIO=s;
+ ['base','bear','sorr'].forEach(x=>document.getElementById('sc-'+x).classList.toggle('active',x===s));run();}
+
+const v=id=>parseFloat(document.getElementById(id).value)||0;
+const fmt=n=>'$'+Math.round(n).toLocaleString();
+const fmtK=n=>{n=Math.round(n);return Math.abs(n)>=1000?'$'+(n/1000).toFixed(n%1000?1:0)+'k':'$'+n;};
+
+/* ---------------- CPF engine ---------------- */
+const CPF={OW_CEIL:8000,ANNUAL_CEIL:102000,FRS:220400,BRS:110200,ERS:440800,
+ BHS_BASE:79000,BHS_GROW:0.03,LIFE_FACTOR:0.00512};
+const rate=a=>a<55?0.37:a<60?0.34:a<65?0.25:a<70?0.165:0.125;
+const allocPre=a=>a<35?[0.6217,0.1621,0.2162]:a<45?[0.5677,0.1891,0.2432]:a<50?[0.5136,0.2162,0.2702]:[0.4055,0.3108,0.2837];
+const allocPost=a=>a<60?[0.3382,0.4030,0.2588]:a<65?[0.1640,0.5060,0.3300]:a<70?[0.1212,0,0.8788]:[0.08,0,0.92];
+
+function project(p){
+ const hh=p.couple?2:1;
+ const FRS=CPF.FRS*hh, ERS=CPF.ERS*hh;
+ let {oa,sa,ra,ma,cash,invest,srs,salaryM}=p;
+ let lifeM=0, depleteAge=null, bhs=CPF.BHS_BASE*hh;
+ const L=[],liqArr=[],cpfArr=[],propArr=[];
+ let prop=p.propVal;
+
+ for(let age=p.ageNow;age<=p.ageEnd;age++){
+ const working=age<p.ageRet, yrs=age-p.ageNow, inflM=Math.pow(1+p.infl,yrs);
+ if(age<65) bhs=CPF.BHS_BASE*hh*Math.pow(1+CPF.BHS_GROW,Math.max(0,age-50));
+ let invR=SCENARIO==='bear'?p.investRet-0.02:p.investRet;
+ let cashR=SCENARIO==='bear'?p.cashRet-0.01:p.cashRet;
+ let srsR=SCENARIO==='bear'?p.srsRet-0.02:p.srsRet;
+ let crash=(SCENARIO==='sorr'&&(age===p.ageRet||age===p.ageRet+1))?0.15:0;
+
+ if(working){
+ const owA=Math.min(salaryM,CPF.OW_CEIL*hh)*12;
+ const awCpf=Math.min(p.bonusM*salaryM,Math.max(0,CPF.ANNUAL_CEIL*hh-owA));
+ const total=(owA+awCpf)*rate(age);
+ if(age<55){const[fo,fs,fm]=allocPre(age);oa+=total*fo;sa+=total*fs;
+ let add=total*fm;if(ma+add>bhs){sa+=ma+add-bhs;ma=bhs;}else ma+=add;}
+ else{const[fo,fr,fm]=allocPost(age);oa+=total*fo;
+ let add=total*fm;if(ma+add>bhs){oa+=ma+add-bhs;ma=bhs;}else ma+=add;
+ const tgt=RA_TARGET==='ers'?ERS:FRS;let toRa=total*fr;
+ if(ra>=tgt)oa+=toRa;else if(ra+toRa>tgt){oa+=ra+toRa-tgt;ra=tgt;}else ra+=toRa;}
+ }
+ if(age===55){const tgt=RA_TARGET==='ers'?ERS:FRS;
+ let t=Math.min(sa,Math.max(0,tgt-ra));ra+=t;sa-=t;
+ if(ra<tgt){let t2=Math.min(oa,tgt-ra);ra+=t2;oa-=t2;}
+ oa+=sa;sa=0;}
+ const base=Math.min(oa,20000)+ra+sa+ma;
+ const extra=Math.min(base,60000)*0.01+(age>=55?Math.min(base,30000)*0.01:0);
+ oa*=1.025;sa*=1.04;ma*=1.04;if(age<65)ra*=1.04;
+ if(age>=55)ra+=extra;else sa+=extra;
+ if(ma>bhs){if(age<55)sa+=ma-bhs;else oa+=ma-bhs;ma=bhs;}
+ if(age===65)lifeM=ra*CPF.LIFE_FACTOR;
+
+ prop*=(1+p.propGrow);
+ if(working){
+ cash+=p.savingM*12; cash*=(1+cashR);
+ invest*=(1+invR);if(crash)invest*=(1-crash);
+ srs*=(1+srsR);
+ if(age<p.mortEnd)cash-=p.mortAmt;
+ } else {
+ cash*=(1+cashR);invest*=(1+invR);if(crash)invest*=(1-crash);srs*=(1+srsR);
+ let need=p.spendM*12*inflM;
+ if(age>=65)need-=lifeM*12;
+ need-=p.otherIncomeM*12*inflM;
+ if(age<p.mortEnd)need+=p.mortAmt;
+ if(need<0){cash+=-need;need=0;}
+ let t;
+ t=Math.min(Math.max(cash,0),need);cash-=t;need-=t;
+ if(need>0&&age>=62){t=Math.min(Math.max(srs,0),need);srs-=t;need-=t;}
+ if(need>0){t=Math.min(Math.max(invest,0),need);invest-=t;need-=t;}
+ if(need>0&&age>=65){t=Math.min(Math.max(oa,0),need);oa-=t;need-=t;}
+ if(need>0&&depleteAge===null)depleteAge=age;
+ }
+ const liquid=Math.max(0,cash)+Math.max(0,invest)+Math.max(0,srs)+(age>=65?Math.max(0,oa):0);
+ const cpfLocked=(age>=65?0:Math.max(0,oa))+Math.max(0,sa)+Math.max(0,ra)+Math.max(0,ma);
+ L.push(age);liqArr.push(Math.round(liquid));cpfArr.push(Math.round(cpfLocked));propArr.push(Math.round(prop));
+ if(working)salaryM*=(1+p.salaryGrowth);
+ }
+ const last=L.length-1;
+ return {labels:L,liq:liqArr,cpf:cpfArr,prop:propArr,depleteAge,
+ lifeM:Math.round(lifeM),
+ endLiquid:liqArr[last],endCpf:cpfArr[last],endProp:propArr[last],
+ endNet:liqArr[last]+cpfArr[last]+propArr[last]};
+}
+
+function gather(){
+ const adv=MODE==='advanced';
+ return {
+ couple: adv&&HOUSEHOLD==='couple',
+ ageNow:v('age'), ageRet:v('retireAge'),
+ ageEnd: adv?v('endAge'):90,
+ salaryM:v('salary'), savingM:v('saving'),
+ bonusM: adv?v('bonus'):0,
+ salaryGrowth: adv?v('salGrow')/100:0,
+ spendM:v('spend'),
+ infl: adv?v('infl')/100:0.025,
+ otherIncomeM: adv?v('otherInc'):0,
+ cash:v('cash'), cashRet: adv?v('cashR')/100:0.005,
+ invest:v('invest'), investRet: adv?v('investR')/100:0.04,
+ srs: adv?v('srs'):0, srsRet: adv?v('srsR')/100:0.04,
+ oa:v('oa'), sa:v('sa'), ra: adv?v('ra'):0, ma: adv?v('ma'):60000,
+ propVal: adv?v('propVal'):0, propGrow: adv?v('propGrow')/100:0,
+ mortAmt: adv?v('mortAmt'):0, mortEnd: adv?v('mortEnd'):0
+ };
+}
+
+let chart=null;
+function run(){
+ const p=gather(), r=project(p);
+
+ document.getElementById('yrsLeft').textContent=Math.max(0,p.ageRet-p.ageNow)+' yrs to go';
+ document.getElementById('spendYr').textContent=fmt(p.spendM*12)+' / year';
+ const capped=Math.min(p.salaryM,8000*(p.couple?2:1));
+ document.getElementById('cpfNote').textContent='~'+fmtK(capped)+' of pay attracts CPF';
+
+ const funded=r.depleteAge===null;
+ const pill=document.getElementById('statuspill');
+ pill.className='pill '+(funded?'ok':'warn');
+ document.getElementById('pilltext').textContent=funded?'On track':'Shortfall';
+
+ const st=document.getElementById('status');
+ if(funded){st.className='status';document.getElementById('statusIc').textContent='✅';
+ document.getElementById('statusT').textContent='On track to age '+p.ageEnd;
+ document.getElementById('statusS').textContent='Your spendable wealth lasts the whole plan, with CPF LIFE providing '+fmt(r.lifeM)+'/month for life from 65.';
+ } else {
+ st.className='status warn';document.getElementById('statusIc').textContent='⚠️';
+ document.getElementById('statusT').textContent='Cash runs out at age '+r.depleteAge;
+ const gap=p.ageEnd-r.depleteAge;
+ document.getElementById('statusS').textContent='Your spendable wealth is exhausted '+gap+' year'+(gap===1?'':'s')+' before your plan-end. CPF LIFE ('+fmt(r.lifeM)+'/mth) continues, but won’t cover your full spending.';
+ }
+
+ document.getElementById('st-life').textContent=fmt(r.lifeM);
+ document.getElementById('st-last').textContent=funded?'Beyond '+p.ageEnd:r.depleteAge;
+ document.getElementById('st-last-x').textContent=funded?'lasts the full plan':'liquid cash depleted';
+ document.getElementById('st-liquid').textContent=fmtK(r.endLiquid);
+ document.getElementById('st-liquid-x').textContent='at age '+p.ageEnd;
+ document.getElementById('st-legacy').textContent=fmtK(r.endNet);
+ const legacyTgt=MODE==='advanced'?v('legacy'):0;
+ document.getElementById('st-legacy-x').textContent=legacyTgt>0?(r.endNet>=legacyTgt?'meets '+fmtK(legacyTgt)+' target':'below '+fmtK(legacyTgt)+' target'):'net worth at end';
+
+ const yrsWork=Math.max(0,p.ageRet-p.ageNow), yrsRet=p.ageEnd-p.ageRet;
+ const rb=document.getElementById('readoutBody');
+ let rows=[
+ ['Years saving / in retirement', yrsWork+' / '+yrsRet+' yrs'],
+ ['Spending at retirement', fmt(p.spendM*12*Math.pow(1+p.infl,yrsWork))+'/yr'],
+ ['CPF LIFE covers', Math.min(100,Math.round(r.lifeM*12/(p.spendM*12*Math.pow(1+p.infl,p.ageRet>=65?p.ageRet-p.ageNow:25))*100))+'% of spend'],
+ ['Liquid wealth at retirement', fmtK(r.liq[Math.max(0,p.ageRet-p.ageNow)]||r.liq[0])]
+ ];
+ if(MODE==='advanced'){
+ rows.push(['Stress test', SCENARIO==='base'?'Base case':SCENARIO==='bear'?'Bear market (−2%/yr)':'Crash at retirement (−15%)']);
+ rows.push(['CPF top-up', RA_TARGET==='none'?'None':RA_TARGET.toUpperCase()]);
+ if(v('propVal')>0) rows.push(['Home value at end', fmtK(r.endProp)]);
+ }
+ rb.innerHTML=rows.map(x=>`<div class="line"><span class="k">${x[0]}</span><b>${x[1]}</b></div>`).join('');
+
+ drawChart(r,p);
+}
+
+function drawChart(r,p){
+ const cv=document.getElementById('chart');
+ if(!cv)return;
+ if(typeof Chart==='undefined'){
+ const w=document.getElementById('chartWrap');
+ if(w&&!w.querySelector('.chart-fallback')){
+ const d=document.createElement('div');
+ d.className='chart-fallback';
+ d.style.cssText='display:flex;align-items:center;justify-content:center;height:100%;color:#516c8e;font-size:13px;text-align:center;padding:20px';
+ d.textContent='Chart needs an internet connection to load. Your numbers above are still accurate.';
+ w.appendChild(d);
+ }
+ return;
+ }
+ const ctx=cv.getContext('2d');
+ const ds=[
+ {label:'Liquid wealth',data:r.liq,borderColor:'#27ae60',backgroundColor:'rgba(39,174,96,.30)',fill:true,borderWidth:1.5,pointRadius:0,tension:.2},
+ {label:'CPF (locked)',data:r.cpf,borderColor:'#5b8dee',backgroundColor:'rgba(91,141,238,.28)',fill:true,borderWidth:1.5,pointRadius:0,tension:.2}
+ ];
+ if(MODE==='advanced'&&v('propVal')>0)
+ ds.push({label:'Property',data:r.prop,borderColor:'#c8933a',backgroundColor:'rgba(200,147,58,.20)',fill:true,borderWidth:1.5,pointRadius:0,tension:.2});
+ if(chart)chart.destroy();
+ try{
+ chart=new Chart(ctx,{type:'line',data:{labels:r.labels,datasets:ds},
+ options:{responsive:true,maintainAspectRatio:false,
+ interaction:{mode:'index',intersect:false},
+ plugins:{legend:{display:false},
+ tooltip:{callbacks:{title:i=>'Age '+i[0].label,
+ label:c=>c.dataset.label+': '+fmt(c.raw)}}},
+ scales:{
+ x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#516c8e',maxTicksLimit:9,font:{size:11}}},
+ y:{stacked:true,grid:{color:'rgba(255,255,255,.05)'},
+ ticks:{color:'#516c8e',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'}}}
+ }});
+ }catch(e){}
+}
+
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',run));
+run();
+</script>
+</body>
+</html>
