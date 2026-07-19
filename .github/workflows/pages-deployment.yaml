@@ -1,7 +1,12 @@
 name: Deploy to Cloudflare Pages
 
 on:
+  # Only main produces the production deployment.
   push:
+    branches:
+      - main
+  # Each pull request gets an isolated Cloudflare Pages preview deployment.
+  pull_request:
     branches:
       - main
   workflow_dispatch:
@@ -11,7 +16,8 @@ permissions:
   deployments: write
 
 concurrency:
-  group: cloudflare-pages-production
+  # Cancel only an obsolete deployment for the same target; previews do not block production.
+  group: cloudflare-pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
   cancel-in-progress: true
 
 jobs:
@@ -26,5 +32,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=at-html-tools --branch=main
+          command: pages deploy . --project-name=at-html-tools --branch=${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'main' }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
