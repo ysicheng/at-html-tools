@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Before the Proof | Paul Young</title>
+  <meta name="description" content="A harm-gated decision standard for government response to unverified and synthetic claims.">
+  <link rel="canonical" href="https://paulysc.com/before-the-proof.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Before the Proof">
+  <meta property="og:description" content="A harm-gated decision standard for government response to unverified and synthetic claims.">
+  <meta property="og:url" content="https://paulysc.com/before-the-proof.html">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .paper { width: min(900px, calc(100% - 40px)); margin: 0 auto; padding: 56px 0 72px; }
+    .paper .download { margin: 0 0 2rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    .paper .download a { display: inline-block; color: #fff; background: var(--green); border-radius: 999px; padding: 12px 20px; text-decoration: none; font-weight: 750; }
+    .doc-content p, .doc-content li { font: 1.06rem/1.75 Georgia, "Times New Roman", serif; margin: 0 0 1.05rem; }
+    .doc-content > p:first-child { font-size: clamp(2.65rem, 6vw, 4.4rem); font-weight: 700; line-height: 1.04; letter-spacing: -.045em; margin-bottom: .45em; }
+    .doc-content > p:nth-child(2) { color: var(--muted); font-size: 1.28rem; line-height: 1.4; }
+    .doc-content > p:nth-child(3) { color: var(--muted); font: .95rem/1.5 Inter, ui-sans-serif, system-ui, sans-serif; }
+    .doc-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin: 1.7rem 0; font: .9rem/1.45 Inter, ui-sans-serif, system-ui, sans-serif; }
+    .doc-content td { vertical-align: top; padding: 8px; border: 1px solid var(--line); }
+    .doc-content td p { font: inherit; margin: 0; }
+    .article-note { margin: 1.5rem 0 2rem; padding: 1rem 1.15rem; border-left: 4px solid var(--gold); background: #fff7e9; color: #604622; border-radius: 0 14px 14px 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    @media (max-width: 520px) { .paper { width: min(100% - 24px, 900px); padding-top: 36px; } .paper p, .paper li { font-size: 1rem; } }
+  </style>
+</head>
+<body>
+<header class="site-header"><nav class="nav shell" aria-label="Main navigation"><a class="brand" href="index.html">Paul<span>.</span></a><div class="nav-links"><a href="about.html">About</a><a aria-current="page" href="writing.html">Work &amp; Writing</a><a href="tools.html">Tools</a><a href="finance.html">Finance</a><a class="nav-button" href="links.html">All links</a></div></nav></header>
+<main class="paper">
+  <p class="download"><a href="papers/Before_the_Proof_Final.docx">Download the original formatted DOCX</a></p>
+  <aside class="article-note"><strong>Publication note.</strong> This manuscript presents an operational communication standard, not legal advice. Institutions must apply jurisdiction-specific law, evidential rules, privacy obligations and command authorities.</aside>
+<section class="doc-content">
+<p class="p1">Before the Proof</p>
+<p class="p1">A Harm-Gated Decision Standard for Government Response to Unverified and Synthetic Claims</p>
+<p class="p2"><b>Third edition: source-audited publication manuscript</b></p>
+<p class="p3">July 2026</p>
+<p class="p1">Executive Summary</p>
+<p class="p4"><b>Research question.</b> Under what observable conditions should a public authority take protective action on an unverified - possibly synthetic - claim before its authenticity is established, and what institutional design keeps that action lawful, proportionate, honest and resistant to abuse?</p>
+<p class="p4"><b>Why it matters.</b> Generative tools have lowered the cost of producing plausible audio, video and images, while reliable authentication may take longer than the period in which harm becomes difficult to reverse. Waiting for forensic proof can therefore surrender the first hour. Acting too quickly creates the opposite risk: amplifying an obscure claim, treating a genuine recording as fake, or allowing precautionary action to be read as a finding of guilt.</p>
+<p class="p4"><b>Core finding.</b> The safest early response is usually not an early verdict on the artefact. It is an early statement about what the authority can genuinely verify: an operational fact, an official-channel record, a protective instruction that remains valid whatever the artefact's origin, or the limits and timetable of the verification process. Authenticity confidence should govern wording and evidential claims; it should not automatically govern whether protection begins.</p>
+<p class="p4"><b>The hard case - when no one can know yet.</b> A verifier is not "available" merely because a senior official can speak. The speaker must have legitimate access to the underlying fact, legal permission and operational readiness. If a recording allegedly captures a private conversation that only its participants could know, a public authority should not convert a participant's denial into independent proof. It should attribute the denial, confirm any independently checkable fact - for example, that no policy decision has been issued through authorised channels - state what is being verified, give a next-update time and offer any provenance-neutral protective instruction. Where no checkable fact or neutral instruction exists, process communication is the honest ceiling.</p>
+<p class="p4"><b>Evidence.</b> Nine public incidents were source-audited: the 2023 Pentagon image; Hawaii's 2018 false missile alert; the 2022 Zelensky surrender deepfake; Slovakia's 2023 election audio; the 2024 New Hampshire Biden robocall; the 2024 Pikesville school audio; the 2024 Southport false-name narrative; the 2023 Pope puffer image; and Singapore's 2023 scam deepfakes. The review corrects several tempting but unsupported causal claims. The Pentagon market recovery cannot be attributed to one fire-service post; Slovakia's 48-hour silence period constrained reach but did not prevent all denials; and Southport disorder began after police had publicly rejected the false name, so the case cannot support a simple "silence caused riots" narrative.</p>
+<p class="p4"><b>Decision standard.</b> Four observable variables drive triage: plausible harm (H), exposure velocity (V), time-to-reversibility (R) and trusted, epistemically qualified verifier availability (T). They yield three dispositions - Monitor, Prepare and Act. Numeric clocks in this paper are operational defaults for exercises, not empirically validated thresholds.</p>
+<p class="p4"><b>Guardrails.</b> The standard binds the responder hardest where institutional self-interest is greatest. Claims that embarrass or implicate the responding institution require an independent verification pathway before the institution publicly labels the artefact fabricated. Named persons receive an explicit no-finding formulation. Every public factual sentence should be tied in the decision log to its basis: direct operational observation, official-channel record, attributed testimony or forensic assessment.</p>
+<p class="p1"><b>Confidence and recommendation.</b> Confidence is high in the harm-gated, checkability-bounded principle; moderate that verifier design is a major controllable condition for timely correction; and low-to-moderate in the proposed numeric thresholds. Public authorities should adopt the standard as exercised doctrine, calibrate the clocks locally, pre-negotiate maximum-lawful statements with counsel, maintain multilingual templates and subject every activation to independent post-incident audit.</p>
+<p class="p1"></p>
+<p class="p1">Contents</p>
+<p class="p5"><b>1. Introduction</b><span class="s1"><span class="Apple-tab-span">	</span>3</span></p>
+<p class="p5"><b>2. Literature and Conceptual Framework</b><span class="s1"><span class="Apple-tab-span">	</span>3</span></p>
+<p class="p6"><b>2.1 Three literatures, one operational gap</b><span class="s1"><span class="Apple-tab-span">	</span>3</span></p>
+<p class="p6"><b>2.2 The framework and propositions</b><span class="s1"><span class="Apple-tab-span">	</span>3</span></p>
+<p class="p5"><b>3. Method, Source Audit and Limits</b><span class="s1"><span class="Apple-tab-span">	</span>4</span></p>
+<p class="p5"><b>4. Case Evidence</b><span class="s1"><span class="Apple-tab-span">	</span>5</span></p>
+<p class="p5"><b>5. Analysis</b><span class="s1"><span class="Apple-tab-span">	</span>7</span></p>
+<p class="p5"><b>6. The Triage Standard</b><span class="s1"><span class="Apple-tab-span">	</span>8</span></p>
+<p class="p5"><b>7. Provisional Communication Protocol</b><span class="s1"><span class="Apple-tab-span">	</span>9</span></p>
+<p class="p5"><b>8. Stress Tests and Failure Conditions</b><span class="s1"><span class="Apple-tab-span">	</span>10</span></p>
+<p class="p5"><b>9. Implications</b><span class="s1"><span class="Apple-tab-span">	</span>10</span></p>
+<p class="p5"><b>10. Conclusion and Research Agenda</b><span class="s1"><span class="Apple-tab-span">	</span>11</span></p>
+<p class="p5"><b>References</b><span class="s1"><span class="Apple-tab-span">	</span>11</span></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>Operational rule in one sentence</b></p>
+        <p class="p8">Act before authentication only on what is genuinely checkable, accurately attributed, or protective under either provenance; when no qualified source can know yet, state the uncertainty, the verification process and the next update.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1"></p>
+<p class="p1">1. Introduction</p>
+<p class="p4"><i>In May 2023, a false report and an apparently AI-generated image of an explosion near the Pentagon coincided with a brief market dip before official and independent debunking restored clarity. In September 2023, a fabricated audio clip surfaced two days before Slovakia's parliamentary election, during a statutory media-silence period that constrained the reach of rebuttal. In July 2024, a false name and migration narrative about the Southport murder suspect spread rapidly despite partial police updates and was publicly rejected by police the next day. These incidents differ sharply, but each posed the same operational question: what may an authority responsibly do and say before authenticity is settled?</i></p>
+<p class="p4"><i>Crisis-communication doctrine values speed, accuracy, credibility, empathy and action, but it does not fully resolve the case in which the central uncertainty is whether an artefact is genuine. Misinformation research evaluates diffusion, corrections and inoculation, but generally does not assign accountable officials a decision trigger. Deepfake law maps harms and remedies, but legislation and enforcement usually move on a slower clock than public protection.</i></p>
+<p class="p4"><i>This paper develops an operational synthesis. Its central hypothesis is that authenticity confidence should govern the wording, evidential weight and coercive consequences of a response, while the timing of protective preparation should be governed by harm and reversibility. Public communication may precede authentication only when it is anchored to a checkable basis or to an instruction that remains valid under either provenance. That boundary is essential: speed without epistemic access is not responsiveness; it is speculation with institutional authority.</i></p>
+<p class="p4"><i>The paper analyses unverified claims generally rather than treating synthetic origin as the defining feature. Within the case set, severe public-order harm followed non-synthetic false claims, while a highly viral synthetic image generated no documented material harm in the sources reviewed. The operational problem is therefore not simply "detect the deepfake". It is to manage consequential uncertainty without manufacturing certainty.</i></p>
+<p class="p4"><i>Section 2 positions the argument in three literatures and states testable propositions. Section 3 explains the comparative and source-audit method. Section 4 presents nine incidents. Sections 5 to 7 derive the epistemic-access rule, triage standard and communication protocol. Sections 8 and 9 examine failure conditions, misuse risks and policy implications, including Singapore. Section 10 concludes with a research agenda.</i></p>
+<p class="p1">2. Literature and Conceptual Framework</p>
+<p class="p1">2.1 Three literatures, one operational gap</p>
+<p class="p4"><b>Crisis communication and management.</b> The US Centers for Disease Control and Prevention's Crisis and Emergency Risk Communication framework emphasises being first, right and credible, expressing empathy, promoting action and showing respect. Crisis-management scholarship likewise treats sense-making and decision under uncertainty as core leadership functions (Boin, 't Hart, Stern and Sundelius, 2016; Coombs, 2007). These principles remain the baseline, but they do not provide a decision rule for the case in which being first risks being wrong about whether the evidence itself is real.</p>
+<p class="p4"><b>Misinformation science.</b> In a large Twitter dataset, false news travelled farther, faster and more broadly than true news, although that result should not be universalised across platforms or contexts (Vosoughi, Roy and Aral, 2018). Corrections generally reduce misperception but often leave residual influence (Chan et al., 2017; Lewandowsky et al., 2012; Ecker et al., 2022). A corrected 2023 meta-analysis reported no statistically significant average corrective effect across science-relevant misinformation domains; the breadth and interpretation of that result remain contested (Chan and Albarracín, 2023, corrected 2025). Psychological inoculation has improved discernment in large online experiments (Roozenbeek et al., 2022; van der Linden, 2024), and 2025 field experiments in the United States and Brazil found modest gains from prebunks and credible-source corrections on election credibility (Carey et al., 2025). This literature informs message design, but not the official trigger to intervene.</p>
+<p class="p4"><b>Synthetic media and law.</b> Chesney and Citron (2019) identified both the direct harms of deepfakes and the "liar's dividend": as the public becomes aware that recordings can be fabricated, genuine evidence becomes easier to deny. Any official practice of rapidly declaring inconvenient material fake is therefore dual-use. A defensible framework must control both delay error and premature adjudication, especially when the responding institution has an interest in the claim being false.</p>
+<p class="p1">2.2 The framework and propositions</p>
+<p class="p4"><i>The first hour is modelled as a two-sided error-cost problem. Delay errors allow preventable harm to mature: panic, fraud, unsafe behaviour, violence or distortion of an imminent civic choice. Premature errors include needless amplification, official treatment of unverified material as genuine, and unsupported fabrication claims that weaken the evidentiary environment. Four observable variables structure the decision: plausible harm (H), exposure velocity (V), time-to-reversibility (R) and trusted, epistemically qualified verifier availability (T).</i></p>
+<p class="p4"><b>P1 - Provenance decoupling, bounded by checkability.</b> Early protective communication can be honest before authentication where it asserts an independently checkable operational or official-channel fact, accurately attributes testimony, or gives a provenance-neutral instruction. It fails where the responder lacks a truthful basis and nonetheless adjudicates the artefact.</p>
+<p class="p4"><b>P2 - Qualified-verifier condition.</b> In high-harm, fast-moving cases, timely harm-limiting response is more likely where a credible and authorised speaker also has legitimate access to the relevant fact, legal permission to disclose it and a prepared channel. This is an institutional hypothesis, not a claim that verifier availability alone determines outcomes.</p>
+<p class="p4"><b>P3 - Symmetric error.</b> Institutional risk runs in both directions. A doctrine designed only to counter delay will create avoidable harm through premature authentication, institutional overreach and self-serving use of the "fake" label.</p>
+<p class="p1">3. Method, Source Audit and Limits</p>
+<p class="p1">3.1 Comparative design</p>
+<p class="p4"><i>The study uses structured, focused comparison (George and Bennett, 2005). Each incident is examined against the same questions: what was knowable during the early response window; what was not; which institution possessed relevant access; what legal or operational constraints applied; what was said or done; and what outcome is documented. The nine incidents were selected to vary claim type, harm, velocity, reversibility and verifier conditions. They are illustrative and theory-building, not a representative sample.</i></p>
+<p class="p1">3.2 Source-audit rule</p>
+<p class="p4"><i>Every event claim in this edition was checked against a traceable source. Priority was given to legislation, official inquiries, regulator records, institutional statements and peer-reviewed research. Contemporaneous journalism is retained only for event facts not fully recorded in official sources and is corroborated where the claim is material. References that could not be located, incomplete URLs and inaccurate bibliographic details were removed or corrected.</i></p>
+<p class="p4"><i>The manuscript distinguishes three levels of claim: (1) source-confirmed facts, such as the time of a police statement; (2) reasonable institutional inferences, such as the risk that administrative leave may be socially read as guilt; and (3) causal claims, such as whether a correction prevented disorder or changed an election result. The third category is used only where the evidence supports it. "No documented harm" is not treated as proof that no harm occurred, and temporal sequence is not treated as causation.</i></p>
+<p class="p1">3.3 Limits</p>
+<p class="p4"><i>Three limits bound inference. First, selection on visible incidents over-represents drama and under-samples rumours that were monitored and died quietly. Second, counterfactuals are generally unidentifiable: the UK Home Affairs Committee, for example, could not determine whether earlier or fuller disclosure after Southport would have prevented disorder. Third, public records reveal decisions imperfectly and may omit internal deliberation. The paper therefore claims analytic generalisation only. Its numeric clocks are proposed operational defaults for exercises and local calibration, not empirically validated cut-offs.</i></p>
+<p class="p1">3.4 What the source audit changed</p>
+<p class="p10">Verified that all nine incidents are real and retained only traceable sources. The original combined Pope/Singapore row was split, so the case count now matches the evidence.</p>
+<p class="p10">Removed causal overstatement: the Pentagon response coincided with, but cannot alone be credited for, market recovery; the Slovak audio is not shown to have changed the election; and Southport disorder began after police had rejected the false name.</p>
+<p class="p10">Corrected institutional detail: Pikesville school authorities publicly said the recording was unverified; Hawaii issued a social correction before the 38-minute wireless correction; and Slovakia's silence period constrained rebuttal reach rather than prohibiting every denial.</p>
+<p class="p10">Corrected the bibliography, including the volume of Chan et al. (2017), the 2025 author correction to Chan and Albarracín, the full Carey et al. (2025) citation, ELIONA commencement and incomplete event-source links.</p>
+<p class="p11"><br></p>
+<p class="p1">4. Case Evidence</p>
+<p class="p12"><i>Table 1 summarises the source-audited coding. Ratings are ordinal judgements used for structured comparison, not measurements. "T" refers to a trusted, epistemically qualified verifier: a speaker with authority, factual access, legal permission and operational readiness.</i></p>
+<p class="p13"><b>Table 1. Source-audited incident coding</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Incident</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Plausible harm / velocity</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Reversibility</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Verifier condition</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Documented response and outcome</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Pentagon image, US (2023)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>High safety and market concern / extreme online velocity</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Minutes</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Operationally available</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Officials said there was no explosion or danger. Market recovered after multiple debunks; the causal contribution of any single statement is not isolated.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Hawaii false alert, US (2018)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Extreme panic / total official-channel reach</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Minutes</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Available but procedurally unprepared</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Social correction at about 13 minutes; corrected wireless alert at 38 minutes. FCC identified human error and inadequate safeguards and procedures.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Zelensky surrender video, Ukraine (2022)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Extreme wartime morale risk / high</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Hours</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Principal and broadcaster available; prior warning existed</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Broadcaster reported compromise; Zelensky rebutted; platforms removed. Contribution of prebunking cannot be isolated.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Slovak election audio (2023)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>High electoral concern / high</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>About 48 hours to polling</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Targets could deny; media-silence rules constrained wider rebuttal</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Targets denied and fact-checkers raised synthesis concerns. No reliable evidence establishes an effect on the election result.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>New Hampshire Biden robocall, US (2024)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>High voter-suppression risk / moderate telephony diffusion</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>About 48 hours to primary</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Attorney General available</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>State warned voters within about a day using explicitly provisional language. Later enforcement followed; turnout effect is unmeasured.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Pikesville school audio, US (2024)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>High harm to named person and community / high locally</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Days to months</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Institution available but lacked quick authentication</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>District said the audio was unverified and placed principal on leave. Police later attributed fabrication to an employee. Precautionary action was widely read as consequential.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Southport false-name narrative, UK (2024)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Extreme public-order risk / extreme</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Hours</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Identity disclosure restricted; police could reject false claims</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Police rejected the invented name at 12:12 on 30 July. Disorder began later that evening. The inquiry found an information vacuum but did not establish that earlier disclosure would have prevented violence.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Pope puffer image (2023)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Low documented material harm / extreme virality</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Not material</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>No public-authority verifier needed</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Organic correction and reporting were sufficient. The reviewed sources document deception and virality, not material harm.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Singapore scam deepfakes (2023)</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Real fraud risk / moderate and recurrent</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Days and cumulative</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Depicted principals and cyber authorities available</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p15"><b>Principals and CSA warned against investment scams and gave protective instructions. Recurrence supports a cumulative trigger.</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p16"><b>Note: </b>The table separates incident facts from causal interpretation. "No documented effect" means the reviewed evidence did not establish an effect; it is not a claim that the effect was zero.</p>
+<p class="p11"><br></p>
+<p class="p1">4.1 Acting on operational and official-channel facts: Pentagon and New Hampshire</p>
+<p class="p4"><b>Pentagon, 22 May 2023.</b> A false report and an apparently AI-generated image of an explosion near the Pentagon spread through high-reach social accounts. Arlington Fire and Emergency Medical Services and the Pentagon Force Protection Agency stated that there was no explosion or incident and no immediate danger. The important point is not that someone could simply "look out the window". The responders had operational access through on-scene, dispatch and protective-service channels. They spoke to the incident status, not to the image's pixels. A brief S&amp;P 500 decline reversed after official and independent debunking, but the sources do not isolate the effect of the official post from the wider correction process.</p>
+<p class="p4"><b>New Hampshire, 22 January 2024.</b> Robocalls using an AI-cloned version of President Biden's voice told Democratic voters not to vote in the primary. The Attorney General said the message "appears to be artificially generated based on initial indications", instructed voters to disregard it and sought evidence from recipients. The protective instruction did not require full authentication. The Federal Communications Commission later proposed a US$6 million penalty, while stressing that the allegations and penalty were proposed rather than finally adjudicated at that stage. The effect on turnout cannot be measured from the public record.</p>
+<p class="p1">4.2 Correction machinery isolated: Hawaii</p>
+<p class="p4"><i>The false ballistic-missile alert in Hawaii on 13 January 2018 was not a synthetic-media incident. Its value is that it isolates correction readiness. The alert was transmitted at 8:07 a.m. A social-media correction appeared around 8:20 a.m.; the corrected Emergency Alert System and Wireless Emergency Alert message was issued at 8:45 a.m., 38 minutes after the false alert. The FCC attributed the incident and response problems to human error combined with inadequate safeguards, procedures, training and supervision. The absence of a prepared false-alert correction process was an important contributor, but not the only cause. Hawaii later introduced two-person confirmation and pre-scripted correction templates.</i></p>
+<p class="p1">4.3 Constrained correction reach: Slovakia and Southport</p>
+<p class="p4"><b>Slovakia, September 2023.</b> A fabricated audio clip appearing to capture opposition leader Michal Šimečka and journalist Monika Tódová discussing election manipulation circulated roughly two days before polling. Both denied it. Fact-checkers identified indications of synthesis, while the audio format fell outside Meta's then manipulated-media rules. Slovakia's 48-hour election silence period constrained the reach and tempo of media and political rebuttal; it did not create a total legal prohibition on every denial. Subsequent analysis disputes the popular claim that the deepfake changed the election result. The case supports a narrower lesson: adversaries can exploit a closing civic window and fragmented verification arrangements; it does not establish electoral causation.</p>
+<p class="p4"><b>Southport, July 2024.</b> After the murders on 29 July, an invented name and false asylum-seeker narrative circulated rapidly. Because the suspect was under 18, police could not publish his identity. Merseyside Police nevertheless issued partial verified information, including that the suspect had been born in Cardiff, and at 12:12 p.m. on 30 July explicitly said the circulating name was false. Disorder in Southport began later that evening. The Home Affairs Committee concluded that an information vacuum allowed misinformation to flourish, but it did not find that the false-name denial came after the riot, that the law prohibited that denial on the first day, or that earlier disclosure would have prevented disorder. Later difficulty over what could be said about the suspect's background exposed inconsistent legal advice. The transferable lesson is the need for pre-agreed routes to the maximum lawful fact, not a simple claim that official silence caused the violence.</p>
+<p class="p1">4.4 Precautionary action and named-person harm: Pikesville</p>
+<p class="p4"><i>A recording apparently capturing Pikesville High School principal Eric Eiswert making racist and antisemitic remarks circulated in January 2024. The school district stated on 17 January that it could not confirm the recording's authenticity and was investigating; it placed the principal on administrative leave. Threats led to police protection at his home. On 24 April, Baltimore County Police said investigators, the FBI and an external expert had concluded that the school's athletic director created the audio using AI, allegedly in retaliation. The case does not show that the district explicitly authenticated the audio. It shows something subtler: even careful "unverified" language may be overwhelmed by the public meaning of visible precautionary measures. Institutions therefore need an explicit no-finding formulation and protective support for the named person while investigation continues.</i></p>
+<p class="p1">4.5 Pre-positioning, proportionality and cumulative harm: Zelensky, the Pope image and Singapore scams</p>
+<p class="p4"><b>Zelensky, March 2022.</b> Ukraine's Centre for Strategic Communications warned on 2 March that a fabricated surrender video might appear. On 16 March, a crude deepfake circulated after a broadcaster was hacked. The broadcaster reported the compromise, President Zelensky issued a real-video rebuttal and platforms removed the fake. The prior warning provided a ready interpretive frame, but the case cannot isolate its causal contribution from the video's poor quality, rapid rebuttal, platform action and wartime audience conditions.</p>
+<p class="p4"><b>Pope puffer image, March 2023.</b> The Midjourney image of Pope Francis in a white puffer jacket reached a large audience and deceived many viewers. Organic fact-checking and reporting corrected it without public-authority intervention. The reviewed evidence documents virality and deception but no specific material safety, financial or civic harm. This is the standard's non-escalation floor: attention is not itself harm.</p>
+<p class="p4"><b>Singapore scam deepfakes, December 2023.</b> Deepfake videos portrayed Prime Minister Lee Hsien Loong and Deputy Prime Minister Lawrence Wong promoting investment schemes. The depicted principals and Singapore's cyber authorities warned the public that the videos were false and advised people not to respond, share personal information or transfer money. These incidents demonstrate a different pattern from the one-off viral image: individually bounded scams can accumulate into a persistent fraud class. Doctrine should therefore include a configurable recurrence trigger based on aggregate harm, not a universal fixed number of incidents.</p>
+<p class="p1">5. Analysis</p>
+<p class="p1">5.1 P1 - supported in narrower form</p>
+<p class="p4"><i>In the incidents with documented protective communication, early responders could speak before full authentication because they had another truthful basis. Pentagon responders knew the operational status; New Hampshire officials could tell voters to ignore an unlawful suppression message; Singapore principals could state what they had not endorsed and give anti-scam instructions; police could state that a circulating name was incorrect. The pattern supports provenance decoupling, but only inside a strict checkability boundary.</i></p>
+<p class="p4"><i>The boundary closes in common hard cases: an alleged leak about a private discussion, a recording of off-camera conduct, or a document describing a decision that has not yet entered an official system. A fast substantive denial may be false. A fast "appears fabricated" claim may exploit the liar's dividend. In those cases, the authority may still protect the public by communicating process, lawful limits and neutral precautions, but it must not manufacture a verdict.</i></p>
+<p class="p1">5.2 The epistemic-access boundary: when no one can know yet</p>
+<p class="p4"><i>The word "verifier" is often used too loosely. Authority and visibility are not enough. A verifier is available only when four conditions are present: (1) institutional authority and audience credibility; (2) legitimate factual access to the underlying event, system or decision; (3) legal permission to disclose a meaningful fact; and (4) operational readiness to speak before the harm becomes difficult to reverse. Failure of any condition makes T constrained.</i></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>Hypothetical White House example A - operational event</b></p>
+        <p class="p8">A viral image claims an explosion near the White House. No single official needs a perfect view of every location. Protective services, emergency dispatch, sensors and on-scene responders can establish a bounded operational fact: "As of 2:15 p.m., our protective and emergency systems show no reported explosion or public-safety incident at the White House complex. Checks continue; next update at 2:30 p.m." The statement identifies its basis and time. It does not claim that the image is fake unless separate evidence supports that conclusion.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>Hypothetical White House example B - private conversation</b></p>
+        <p class="p8">An audio clip allegedly records a private Oval Office conversation. Only the participants may know what was said, and each may have an interest in the answer. A defensible response is: "The recording is unverified. The President states that he did not make the remarks attributed to him. No policy decision of the kind described has been issued through authorised channels. Independent technical and documentary checks are under way; update by 5 p.m." The President's denial is attributed testimony, not independent authentication. If no checkable official-channel fact exists, omit it and communicate only the process and next update.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p4"><i>This approach answers the apparent paradox: "How can government respond if it does not know the truth?" It responds to the risk without pretending to know the disputed fact. It separates four evidence classes: direct operational observation; official-channel or system records; attributed principal or witness testimony; and forensic assessment. Public wording should never give a weaker class the authority of a stronger one.</i></p>
+<p class="p1">5.3 P2 - plausible institutional pattern, not a causal finding</p>
+<p class="p4"><i>The cases suggest that timely response depends on more than detection technology. Hawaii had ground truth but lacked a prepared correction pathway. Slovakia had immediate denials but constrained media reach and weak platform coverage. Southport had legal limits on identity disclosure but retained some ability to issue bounded corrections. Pentagon responders had direct operational access and a channel already carrying the claim. These comparisons make verifier design a useful investment hypothesis: map who can know, who can lawfully say what, and how quickly they can reach the exposed audience.</i></p>
+<p class="p4"><i>The evidence does not justify the stronger proposition that verifier availability primarily determines outcome severity. Artefact quality, audience trust, platform amplification, prior beliefs, policing, political context and chance also matter. The framework should therefore treat T as a controllable condition for response capacity, not a sufficient cause of good outcomes.</i></p>
+<p class="p1">5.4 P3 - supported with qualification</p>
+<p class="p4"><i>Pikesville shows the named-person risk even where an institution explicitly says that a recording is unverified: precautionary action and public interpretation can still impose severe reputational and safety costs before authentication. The liar's-dividend literature supplies the broader institutional risk: unsupported official claims of fabrication weaken the value of future denials. The evidence supports symmetric safeguards, but it does not prove that every interim measure is avoidable or wrongful. The correct requirement is proportionality, explicit no-finding language, protective support and rapid independent review.</i></p>
+<p class="p1">6. The Triage Standard</p>
+<p class="p1">6.1 Variables and observables</p>
+<p class="p10">H - plausible harm. HIGH where belief could change safety behaviour, impede critical operations, defraud or endanger identifiable people, or materially distort an imminent civic decision. Test: if most exposed people believed this for 24 hours, what concrete harm could occur? Institutional embarrassment, satire, criticism and ridicule are not harm for this purpose.</p>
+<p class="p10">V - exposure velocity. HIGH where there is rapid cross-platform movement, broadcast or wire pickup, amplification by a trusted or high-reach messenger, or a sharp rise in inbound public queries. Absolute view counts should be interpreted against the affected audience, not in isolation.</p>
+<p class="p10">R - time-to-reversibility. SHORT where an irreversible or hard-to-reverse event sits inside the likely verification period: a vote, payment, market session, protest, mob action, evacuation or safety decision. The 48-hour marker used here is a planning convention, not a universal threshold.</p>
+<p class="p10">T - trusted, epistemically qualified verifier availability. AVAILABLE only when an authorised and credible speaker has legitimate factual access, legal permission and operational readiness. Where any element is absent, T is CONSTRAINED and the team must identify the maximum truthful and lawful statement.</p>
+<p class="p1">6.2 Disposition rule</p>
+<p class="p13"><b>Table 2. Triage dispositions and default clocks</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Disposition</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Minimum trigger</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p14"><b>Action, owner and default clock</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>MONITOR</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>H low regardless of V; or H uncertain, V low and R long. A locally configured recurrence or aggregate-harm trigger may escalate a claim class to Prepare.</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>Log timestamps and basis; preserve evidence; begin validation; define re-review triggers. No public posture unless silence itself creates a material risk. Duty officer reviews at +60 minutes and on trigger.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>PREPARE</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>H high with V rising, R uncertain/short, or T constrained. Mandatory where no checkable substantive statement is available.</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>Name accountable lead; establish ground truth before artefact forensics; obtain maximum-lawful-statement advice; prepare process line and protective instruction; brief principal; protect named persons. Decide Act/Monitor within 60 minutes or earlier on trigger.</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>ACT</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>H high; R short; V high or trusted-messenger pickup; and a truthful checkable fact, attributed testimony, or provenance-neutral protective instruction exists. If T is constrained, Act is limited to those bounded elements.</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p17"><b>Issue the lowest-authority credible statement on the channel carrying the claim and on the record channel. State the basis and confidence; give a next-update time; use coercive or enforcement powers only where a clear legal threshold is met. First statement within 60 minutes of the Act decision.</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p18"><b>Clock caveat.</b> The 15-minute, 60-minute and 48-hour markers are doctrine-design defaults. Institutions should calibrate them through exercises, after-action data and jurisdiction-specific legal constraints. They should not be represented as research-derived optimal thresholds.</p>
+<p class="p1">6.3 Confidence and basis labels</p>
+<p class="p4"><i>Authenticity confidence governs wording, verification intensity and enforcement referral. It never licenses a statement beyond the evidence. Each public factual sentence should carry an internal basis label in the incident log: O - direct operational observation or system status; C - official-channel or documentary record; T - attributed testimony from a participant or principal; F - forensic assessment; L - legal constraint or maximum-lawful-statement advice. The label need not appear publicly, but the statement should reveal the basis in plain language where useful.</i></p>
+<p class="p4"><i>Examples: "Emergency services report no incident" is an O claim. "No order has been issued through the authorised system" is a C claim. "The Minister says she did not make the statement" is a T claim. "Initial forensic indicators suggest manipulation" is an F claim and must remain provisional unless the analysis is conclusive. Testimony from an implicated principal is relevant evidence but not independent proof.</i></p>
+<p class="p1">6.4 Structural safeguards</p>
+<p class="p10">Do-not-escalate boundary. Do not activate merely for embarrassment, satire, criticism, ridicule or virality. Do not use the framework to suppress lawful speech, monitor communities, infer hostile attribution or convert reputational discomfort into public harm.</p>
+<p class="p10">Self-interest safeguard. Where the claim implicates the responding institution or its principals, a public fabrication claim requires an independent verification pathway outside the implicated chain and contemporaneous logging of the evidential basis. Until then, the institution may state checkable facts and attribute denials, but should not present its own interest as conclusive authentication.</p>
+<p class="p10">Named-person clause. Public language must state that the material is unverified, that fabrication or manipulation remains a live possibility where technically plausible, and that interim administrative steps imply no finding. Threats and harassment are treated as separate safety harms.</p>
+<p class="p10">Evidence preservation and public non-amplification. Preserve the original artefact, metadata and chain of custody internally. Publicly reproduce or link the artefact only where identification is necessary and the amplification risk has been assessed; otherwise describe it generically.</p>
+<p class="p10">Stop and correction duty. De-escalate when diffusion falls, organic correction clearly outpaces the claim, the irreversible event passes without the anticipated harm, or substantive resolution is reached. Correct any official error promptly on the same channels and retain the original and corrected record.</p>
+<p class="p10">Human accountability. Automated tools may support detection, triage and forensic review, but no tool output constitutes the decision to accuse, compel, attribute or sanction.</p>
+<p class="p1">7. Provisional Communication Protocol</p>
+<p class="p4"><i>Messages should lead with the protective truth or action, describe the false or disputed claim generically, identify the evidential basis, state uncertainty precisely and commit to an update. Publish on the channel carrying the claim and on the institution's record channel. Use identical core wording across languages and trusted intermediaries. Where simultaneous multilingual release is not operationally possible, state the sequencing and minimise the differential information vacuum.</i></p>
+<p class="p1">7.1 Prepare - process only</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p19"><b>Template</b></p>
+        <p class="p8">"We are aware of material circulating online concerning [subject]. Its accuracy has not been established. [Responsible team] is checking [brief description of the records, systems or witnesses being examined]. We will update by [time]. Meanwhile, [protective instruction that remains valid regardless of authenticity, if any]. Please rely on [official channel] for confirmed information."</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1">7.2 Act - operational fact available</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>Template</b></p>
+        <p class="p8">"As of [time], [emergency service / protective system / on-scene command] reports no [incident] at [bounded location]. Checks continue. The circulating image or report has not yet been authenticated. [Protective instruction]. Next update by [time]."</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1">7.3 Act - official-channel fact available</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>Template</b></p>
+        <p class="p8">"No [order / payment request / policy decision / public statement] of the kind described has been issued through [authorised channel or system]. The circulating material is unverified. Do not [transfer funds / change safety behaviour / act on the message]. Verification continues; update by [time]."</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1">7.4 Principal denial without independent proof</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p20"><b>Template</b></p>
+        <p class="p8">"The [President / Minister / chief executive] states that [he / she / they] did not make the remarks attributed in the circulating recording. That statement is being checked against available records and technical evidence. At present, the recording remains unverified. [Any independently checkable official-channel fact.] Update by [time]."</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1">7.5 No qualified access yet</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p20"><b>Template</b></p>
+        <p class="p8">"We do not yet have a reliable basis to determine whether the circulating [recording / document / image] is genuine. We are checking [records / participants / technical indicators] and will update by [time]. We will not speculate in the meantime. [Protective instruction, if any]."</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1">7.6 Named person</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>Template</b></p>
+        <p class="p8">"The material attributed to [name] is unverified. Fabrication or manipulation is one line of inquiry. Interim administrative steps are precautionary and imply no finding about [name] or the material. Threats or harassment will be referred to the appropriate authorities. Update by [time]."</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1">7.7 Legally constrained</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>Template</b></p>
+        <p class="p8">"The law limits the details we can release at this stage. We can confirm [maximum lawful fact and its basis]. The circulating [specific generic claim] is [incorrect / unverified] to the extent stated. Publishing speculation may prejudice proceedings or endanger people. Legal review is continuing; next update by [time]."</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p1">8. Stress Tests and Failure Conditions</p>
+<p class="p10">No checkable basis. Where no qualified source has access and no neutral instruction exists, substantive Act is closed. Process communication is not weakness; it is the maximum honest statement.</p>
+<p class="p10">Low-trust or polarised audiences. An authorised verifier may persuade only part of the public and may even strengthen motivated disbelief. Use multiple credible intermediaries and avoid assuming that institutional authority equals audience trust.</p>
+<p class="p10">Correction-driven amplification. Public response can introduce an obscure claim to a larger audience. Monitor should remain a real disposition; intervention requires plausible harm, not merely falsity or virality.</p>
+<p class="p10">Slow-burn narratives. A first-hour framework is weak against claims that accumulate gradually without a velocity spike. Those require a separate longitudinal assessment, evidence publication and public-engagement strategy.</p>
+<p class="p10">Threshold creep. "Harm" may drift from public safety and rights into institutional discomfort. Independent audit should test every activation against the do-not-escalate boundary and record rejected activations as well as approved ones.</p>
+<p class="p10">Legal overconfidence. Counsel may disagree under pressure, as the Southport inquiry showed in relation to later disclosure questions. Peacetime scenario work should identify the maximum lawful statement and escalation route, but local law always controls the live decision.</p>
+<p class="p10">Fast official error. A rapid statement that overclaims its basis can worsen the crisis. The same-channel correction duty, basis labels and timed updates reduce this risk but cannot remove it.</p>
+<p class="p1">9. Implications</p>
+<p class="p1">9.1 Public policy and law</p>
+<p class="p4"><i>Election silence periods, reporting restrictions and sub judice rules protect important democratic and trial interests. The cases do not justify removing those safeguards. They justify designing lawful pathways for bounded correction when misinformation creates an immediate public risk: who may decide, what minimum fact may be released, what independent or judicial check applies, and how the decision is recorded. The UK Law Commission's contempt project illustrates the appropriate route - consultation, staged analysis and draft legislation - rather than crisis-time improvisation.</i></p>
+<p class="p1">9.2 National security and crisis readiness</p>
+<p class="p4"><i>Known high-stakes windows - elections, mobilisation, conflict, major summits and public-safety incidents - should be treated as verifier-readiness periods. Institutions should pre-map the operational systems that can establish ground truth, the principals who may give testimony, the independent forensic support available, the legal constraints and the channels needed to reach exposed audiences. The aim is not predictive attribution or counter-influence. It is the ability to make a bounded truthful statement before preventable harm becomes irreversible.</i></p>
+<p class="p1">9.3 Crisis-communication practice</p>
+<p class="p4"><i>The standard extends rather than replaces CERC. "Be first, be right" becomes: be first about what you can be right about, and explicit about what you cannot yet know. The key craft is evidential drafting - matching every clause to a source class, not merely softening an unsupported conclusion with words such as "appears" or "likely".</i></p>
+<p class="p1">9.4 Civil liberties, ethics and trust</p>
+<p class="p4"><i>Legitimacy depends on restraint. The framework observes claims rather than profiles people; activates on plausible concrete harm rather than offence; separates public protection from enforcement; and binds self-interested fabrication claims to independent review. An institution that overstates certainty may win an hour and damage trust for years.</i></p>
+<p class="p1">9.5 Singapore applicability</p>
+<p class="p4"><i>Singapore has compact institutional coordination, established official channels and a developed legal architecture for online harms. POFMA provides correction and other directions against qualifying online falsehoods; FICA addresses foreign interference; and the Elections (Integrity of Online Advertising) (Amendment) Act 2024 prohibits specified digitally generated or manipulated online election advertising that realistically misrepresents candidates. The Act commenced on 22 January 2025.</i></p>
+<p class="p4"><i>ELIONA should be described precisely. Candidates may ask the Returning Officer to review content and may make a declaration about whether it depicts something they did not say or do. The Returning Officer also considers technical and other evidence and retains the statutory decision. The arrangement gives the depicted candidate a formal evidential role; it does not make the candidate the sole authenticator. A knowingly false or misleading candidate declaration is itself an illegal practice.</i></p>
+<p class="p4"><i>Three practical implications follow. First, own-voice clarification and protective instruction should normally begin early and may run in parallel with legal review; compelled directions should be used when their statutory thresholds and proportionality case are met, not as a substitute for clear communication. Second, a small standing library of pre-cleared templates across the four official languages would reduce delay and differential information gaps. Third, because state correction powers exist, the do-not-escalate boundary, independent self-interest safeguard and auditable evidential basis are particularly important.</i></p>
+<p class="p1">10. Conclusion and Research Agenda</p>
+<p class="p4"><i>The operative question is not simply when government should call a suspected deepfake fake. It is when public protection may begin before authentication, and what may be said without exceeding the evidence. The answer is harm-gated and epistemically bounded. Prepare when plausible harm and a closing window justify mobilisation. Act publicly only on a checkable operational or official-channel fact, accurately attributed testimony, a defensible forensic assessment, or a protective instruction that remains valid whatever the artefact's origin. When no one has qualified access, say so, describe the verification process and keep the update commitment.</i></p>
+<p class="p4"><i>The framework's most important institutional move is to redefine verifier availability. A senior spokesperson who lacks access is not a verifier. A witness with access but a conflict of interest is a source whose testimony must be attributed. A forensic tool is an assessment, not an accountable decision-maker. A legally authorised official without a prepared channel may still miss the reversibility window. Readiness therefore requires authority, access, legality and execution together.</i></p>
+<p class="p4"><i>Three research priorities follow. First, institutions should log monitored non-events and rejected activations to reduce selection bias. Second, field and simulation studies should compare process-only statements, silence and premature substantive claims in genuinely unknowable scenarios. Third, jurisdictions should evaluate reforms that improve maximum-lawful-statement pathways without weakening fair-trial, privacy and election safeguards. Until that evidence exists, the standard should be used as exercised, auditable doctrine and revised whenever incident data contradict it.</i></p>
+<p class="p1">References</p>
+<p class="p4"><i>Publication note. This manuscript presents an operational communication standard, not legal advice. Institutions must apply jurisdiction-specific law, evidential rules, privacy obligations and command authorities. All web references were located and checked for title, publisher and substantive relevance during the July 2026 source audit. Living webpages may later move; DOI and official publication identifiers are included where available.</i></p>
+<p class="p1">Primary, official and institutional sources</p>
+<p class="p21">Baltimore County Public Schools. (2024, 17 January). Community update regarding Pikesville High School audio recording. <span class="s2">https://www.bcps.org/cms/One.aspx?pageId=71008915&amp;portalId=2828</span></p>
+<p class="p22"><span class="s3">Baltimore County Public Schools. (2024, 24 April). Update on Pikesville High School investigation. </span><span class="s4">https://www.bcps.org/system/b_c_p_s_news/2023-2024_staff_and_community_messages/april_24__2024_staff_and_community_update__message_from_superintendent_dr__myriam_rogers_regarding_pikesville_high_school_investigation</span></p>
+<p class="p21">Cyber Security Agency of Singapore. (2024, 22 March). Advisory on detecting and responding to deepfake scams. <span class="s2">https://www.csa.gov.sg/alerts-and-advisories/advisories/ad-2024-006/</span></p>
+<p class="p21">Federal Communications Commission. (2018). Report and recommendations: Hawaii Emergency Management Agency January 13, 2018 false alert. Public Safety and Homeland Security Bureau. <span class="s2">https://docs.fcc.gov/public/attachments/DOC-350119A1.pdf</span></p>
+<p class="p21">Federal Communications Commission. (2024, 23 May). FCC proposes $6 million fine for illegal robocalls using deepfake, AI-generated voice cloning. <span class="s2">https://docs.fcc.gov/public/attachments/DOC-402762A1.pdf</span></p>
+<p class="p21">Law Commission of England and Wales. (2025-2026). Contempt of court project page, consultations and report status. Accessed 22 July 2026. <span class="s2">https://lawcom.gov.uk/project/contempt-of-court/</span></p>
+<p class="p21">Ministry of Digital Development and Information, Singapore. (2024, 9 September). New legal measures to uphold integrity of online advertising during elections. <span class="s2">https://www.mddi.gov.sg/newsroom/new-legal-measures-uphold-integrity-online-advertising-elections/</span></p>
+<p class="p21">Ministry of Digital Development and Information, Singapore. (2024, 15 October). Opening speech at the Second Reading of the Elections (Integrity of Online Advertising) (Amendment) Bill. <span class="s2">https://www.mddi.gov.sg/newsroom/opening-speech-by-minister-josephine-teo-at-the-second-reading-of-the-eliona-bill/</span></p>
+<p class="p21">Singapore Statutes Online. (2019). Protection from Online Falsehoods and Manipulation Act 2019. <span class="s2">https://sso.agc.gov.sg/Act/POFMA2019</span></p>
+<p class="p21">Singapore Statutes Online. (2024). Elections (Integrity of Online Advertising) (Amendment) Act 2024 (No. 34 of 2024). <span class="s2">https://sso.agc.gov.sg/Acts-Supp/34-2024/Published/20241121</span></p>
+<p class="p21">Singapore Statutes Online. (2025). Elections (Integrity of Online Advertising) (Amendment) Act 2024 (Commencement) Notification 2025 (S 47/2025). <span class="s2">https://sso.agc.gov.sg/SL-Supp/S47-2025/Published/20250120</span></p>
+<p class="p21">UK House of Commons Home Affairs Committee. (2025). Police response to the 2024 summer disorder. HC 381. <span class="s2">https://publications.parliament.uk/pa/cm5901/cmselect/cmhaff/381/report.html</span></p>
+<p class="p21">US Centers for Disease Control and Prevention. (n.d.). Crisis and Emergency Risk Communication (CERC). Accessed 22 July 2026. <span class="s2">https://www.cdc.gov/cerc/php/about/index.html</span></p>
+<p class="p21">US Department of Defense, Washington Headquarters Services. (2023). FOIA release 23-F-0909: Pentagon tweet concerning false explosion report. <span class="s2">https://www.esd.whs.mil/Portals/54/Documents/FOID/Reading%20Room/Public_Affairs/23-F-0909_Pentagon_Tweet_2023.pdf</span></p>
+<p class="p1">Peer-reviewed books and articles</p>
+<p class="p21">Boin, A., 't Hart, P., Stern, E., &amp; Sundelius, B. (2016). The politics of crisis management: Public leadership under pressure (2nd ed.). Cambridge University Press.</p>
+<p class="p21">Carey, J. M., Fogarty, B., Gehrke, M., Nyhan, B., &amp; Reifler, J. (2025). Prebunking and credible-source corrections increase election credibility: Evidence from the United States and Brazil. Science Advances, 11(35), eadv3758. <span class="s2">doi.org/10.1126/sciadv.adv3758</span></p>
+<p class="p21">Chan, M. S., Jones, C. R., Hall Jamieson, K., &amp; Albarracín, D. (2017). Debunking: A meta-analysis of the psychological efficacy of messages countering misinformation. Psychological Science, 28(11), 1531-1546. <span class="s2">doi.org/10.1177/0956797617714579</span></p>
+<p class="p21">Chan, M. S., &amp; Albarracín, D. (2023). A meta-analysis of correction effects in science-relevant misinformation. Nature Human Behaviour, 7, 1514-1525. <span class="s2">doi.org/10.1038/s41562-023-01623-8</span></p>
+<p class="p21">Chan, M. S., &amp; Albarracín, D. (2025). Author correction: A meta-analysis of correction effects in science-relevant misinformation. Nature Human Behaviour. <span class="s2">doi.org/10.1038/s41562-025-02294-3</span></p>
+<p class="p21">Chesney, R., &amp; Citron, D. K. (2019). Deep fakes: A looming challenge for privacy, democracy, and national security. California Law Review, 107(6), 1753-1820. <span class="s2">doi.org/10.15779/Z38RV0D15J</span></p>
+<p class="p21">Coombs, W. T. (2007). Protecting organization reputations during a crisis: The development and application of situational crisis communication theory. Corporate Reputation Review, 10(3), 163-176. <span class="s2">doi.org/10.1057/palgrave.crr.1550049</span></p>
+<p class="p21">de Nadal, L., &amp; Jančárik, P. (2024). Beyond the deepfake hype: AI, democracy, and "the Slovak case". Harvard Kennedy School Misinformation Review. <span class="s2">doi.org/10.37016/mr-2020-153</span></p>
+<p class="p21">Ecker, U. K. H., Lewandowsky, S., Cook, J., Schmid, P., Fazio, L. K., Brashier, N., Kendeou, P., Vraga, E. K., &amp; Amazeen, M. A. (2022). The psychological drivers of misinformation belief and its resistance to correction. Nature Reviews Psychology, 1, 13-29. <span class="s2">doi.org/10.1038/s44159-021-00006-y</span></p>
+<p class="p21">George, A. L., &amp; Bennett, A. (2005). Case studies and theory development in the social sciences. MIT Press.</p>
+<p class="p21">Lewandowsky, S., Ecker, U. K. H., Seifert, C. M., Schwarz, N., &amp; Cook, J. (2012). Misinformation and its correction: Continued influence and successful debiasing. Psychological Science in the Public Interest, 13(3), 106-131. <span class="s2">doi.org/10.1177/1529100612451018</span></p>
+<p class="p21">Lewandowsky, S., Cook, J., Ecker, U. K. H., et al. (2020). The Debunking Handbook 2020. <span class="s2">doi.org/10.17910/b7.1182</span></p>
+<p class="p21">Roozenbeek, J., van der Linden, S., Goldberg, B., Rathje, S., &amp; Lewandowsky, S. (2022). Psychological inoculation improves resilience against misinformation on social media. Science Advances, 8(34), eabo6254. <span class="s2">doi.org/10.1126/sciadv.abo6254</span></p>
+<p class="p21">van der Linden, S. (2024). Countering misinformation through psychological inoculation. Advances in Experimental Social Psychology, 69. <span class="s2">doi.org/10.1016/bs.aesp.2023.11.001</span></p>
+<p class="p21">Vosoughi, S., Roy, D., &amp; Aral, S. (2018). The spread of true and false news online. Science, 359(6380), 1146-1151. <span class="s2">doi.org/10.1126/science.aap9559</span></p>
+<p class="p1">Research-institute and corroborating event sources</p>
+<p class="p21">Agence France-Presse Fact Check. (2023, 23 May). Fake Pentagon explosion image briefly rattles markets. <span class="s2">https://factcheck.afp.com/doc.afp.com.33FV4BU</span></p>
+<p class="p21">Agence France-Presse Fact Check. (2023, 28 March). Image of Pope Francis in a puffer jacket was generated by AI. <span class="s2">https://factcheck.afp.com/doc.afp.com.33C66F3</span></p>
+<p class="p21">Associated Press. (2025, 9 June). Former school athletic director sentenced in AI-generated recording case. <span class="s2">https://apnews.com/article/487ea673b0449077cb23e7970546cb9f</span></p>
+<p class="p21">Institute for Strategic Dialogue. (2024). From rumours to riots: How online misinformation fuelled violence in the aftermath of the Southport attack. <span class="s2">https://www.isdglobal.org/digital-dispatch/from-rumours-to-riots-how-online-misinformation-fuelled-violence-in-the-aftermath-of-the-southport-attack/</span></p>
+<p class="p21">New Hampshire Public Radio. (2024, 22 January). Fake Biden robocall tells New Hampshire Democrats not to vote. <span class="s2">https://www.nhpr.org/nh-news/2024-01-22/fake-biden-robocall-new-hampshire-primary</span></p>
+<p class="p21">NPR. (2023, 22 May). Fake viral images of an explosion at the Pentagon were probably created by AI. <span class="s2">https://www.npr.org/2023/05/22/1177590231/</span></p>
+<p class="p21">TechCrunch. (2022, 16 March). Facebook removes deepfake of Ukraine's President Zelenskyy. <span class="s2">https://techcrunch.com/2022/03/16/facebook-zelensky-deepfake/</span></p>
+</section>
+</main>
+<footer class="footer"><div class="shell footer-inner"><span>Paul Young</span><a href="writing.html">More writing</a></div></footer>
+</body>
+</html>
