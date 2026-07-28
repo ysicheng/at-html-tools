@@ -170,6 +170,33 @@ button{font-family:inherit;cursor:pointer}
 .readout .line b{font-weight:700;color:var(--text)}
 .readout .k{color:var(--text2)}
 
+/* ---------- Decision-first results ---------- */
+.decision-card{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(200,147,58,.15),rgba(17,31,51,.96) 58%);border:1px solid rgba(232,181,90,.38);border-radius:var(--radius);padding:20px 18px 17px;margin:0 0 14px}
+.decision-card::after{content:'';position:absolute;width:220px;height:220px;right:-100px;top:-135px;border-radius:50%;background:radial-gradient(circle,rgba(232,181,90,.17),transparent 68%);pointer-events:none}
+.decision-kicker{position:relative;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold2);margin-bottom:7px}
+.decision-title{position:relative;font-family:'Playfair Display',serif;font-size:clamp(23px,5vw,31px);line-height:1.08;color:var(--text);letter-spacing:-.35px;max-width:720px}
+.decision-copy{position:relative;max-width:720px;color:var(--text2);font-size:13px;line-height:1.55;margin-top:8px}
+.decision-facts{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.decision-fact{background:rgba(8,15,26,.38);border:1px solid rgba(138,166,198,.18);border-radius:10px;padding:10px}
+.decision-fact .df-l{font-size:9px;font-weight:800;letter-spacing:.7px;color:var(--text3);text-transform:uppercase}
+.decision-fact .df-v{font-size:14px;font-weight:700;color:var(--text);margin-top:3px;line-height:1.2}
+.next-steps{margin:0 0 14px}
+.next-steps h4{font-size:11px;font-weight:800;letter-spacing:.7px;color:var(--gold2);text-transform:uppercase;margin:2px 4px 9px}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 12px}
+.step-card .step-n{width:21px;height:21px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;background:var(--gold-faint);border:1px solid rgba(200,147,58,.25);color:var(--gold2);font-size:11px;font-weight:800;margin-bottom:7px}
+.step-card b{display:block;font-size:12px;color:var(--text);line-height:1.25}
+.step-card p{font-size:11.5px;line-height:1.45;color:var(--text2);margin-top:4px}
+.result-actions{display:flex;gap:9px;flex-wrap:wrap;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin:0 0 14px}
+.result-actions .action-copy{flex:1 1 210px;padding:1px 3px;color:var(--text2);font-size:11.5px;line-height:1.45}
+.result-actions .action-copy b{display:block;color:var(--text);font-size:12px;margin-bottom:2px}
+.action-btn{border:1px solid var(--border2);border-radius:9px;background:var(--card2);color:var(--text);font-size:12px;font-weight:700;padding:10px 12px;white-space:nowrap;transition:.15s}
+.action-btn:hover{border-color:var(--gold);color:var(--gold2);transform:translateY(-1px)}
+.action-btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));border-color:transparent;color:#1a1206}
+.action-btn.primary:hover{color:#1a1206}
+.privacy-line{font-size:10.5px;color:var(--text3);text-align:center;margin:-5px 4px 14px}
+@media(max-width:620px){.decision-facts,.step-grid{grid-template-columns:1fr}.result-actions{padding:11px}.action-btn{flex:1}.decision-card{padding:18px 15px}}
+
 /* ---------- Guide ---------- */
 .guide{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
  padding:18px 18px 6px;margin-bottom:12px;font-size:13.5px;color:var(--text2);line-height:1.65}
@@ -403,6 +430,29 @@ body.adv .grid.g2{grid-template-columns:1fr}
  <div class="ic" id="statusIc">✅</div>
  <div><div class="st" id="statusT">Fully funded</div><div class="ss" id="statusS">Your savings cover your retirement spending.</div></div>
  </div>
+
+ <div class="decision-card">
+  <div class="decision-kicker">Your retirement answer</div>
+  <div class="decision-title" id="decisionTitle">You are on track for your target retirement age.</div>
+  <div class="decision-copy" id="decisionCopy">This estimate shows what your current plan needs to deliver, and where to focus next.</div>
+  <div class="decision-facts">
+   <div class="decision-fact"><div class="df-l">Target retirement</div><div class="df-v" id="df-retire">Age 63</div></div>
+   <div class="decision-fact"><div class="df-l">Retirement spending</div><div class="df-v" id="df-spend">$3,500 / month</div></div>
+   <div class="decision-fact"><div class="df-l">CPF LIFE covers</div><div class="df-v" id="df-life-cover">—</div></div>
+  </div>
+ </div>
+
+ <div class="next-steps">
+  <h4>Best next steps</h4>
+  <div class="step-grid" id="nextSteps"></div>
+ </div>
+
+ <div class="result-actions">
+  <div class="action-copy"><b>Keep a copy of this plan</b>Email opens in your own mail app; download creates a private, printable snapshot. Nothing is uploaded to RetireSG.</div>
+  <button class="action-btn" onclick="emailSnapshot()">Email this summary</button>
+  <button class="action-btn primary" onclick="downloadSnapshot()">Download printable snapshot</button>
+ </div>
+ <div class="privacy-line">Planning estimate only — re-check CPF rules and your assumptions before acting.</div>
 
  <div class="adv-only">
  <div class="sect">Stress test<span class="ln"></span></div>
@@ -648,7 +698,62 @@ function gather(){
  };
 }
 
-let chart=null;
+let chart=null, LATEST=null;
+const esc=s=>String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const scenarioName=()=>SCENARIO==='base'?'Base case':SCENARIO==='bear'?'Bear market':'Crash at retirement';
+
+function snapshotData(){
+ const p=gather(),r=project(p),funded=r.depleteAge===null;
+ const yearsToRet=Math.max(0,p.ageRet-p.ageNow);
+ const spendAtRet=p.spendM*12*Math.pow(1+p.infl,yearsToRet);
+ const lifeCoverage=spendAtRet>0?Math.min(100,Math.round(r.lifeM*12/spendAtRet*100)):0;
+ return {p,r,funded,yearsToRet,spendAtRet,lifeCoverage};
+}
+function snapshotText(d){
+ const {p,r,funded,yearsToRet,spendAtRet,lifeCoverage}=d;
+ return [
+  'RETIREMENT SNAPSHOT — RetireSG',
+  'Created: '+new Date().toLocaleDateString('en-SG'),
+  '',
+  'VERDICT',
+  funded?'On track: current plan lasts to age '+p.ageEnd+'.':'Plan gap: spendable wealth runs out at age '+r.depleteAge+'.',
+  '',
+  'PLAN',
+  'Current age: '+p.ageNow,
+  'Target retirement age: '+p.ageRet+' ('+yearsToRet+' years from now)',
+  'Plan through age: '+p.ageEnd,
+  'Retirement spending: '+fmt(p.spendM)+'/month in today\'s dollars',
+  'Estimated spending at retirement: '+fmt(spendAtRet)+'/year',
+  '',
+  'RESULTS',
+  'CPF LIFE estimate: '+fmt(r.lifeM)+'/month from age 65',
+  'CPF LIFE covers: '+lifeCoverage+'% of projected retirement spending',
+  'Spendable wealth lasts: '+(funded?'beyond age '+p.ageEnd:'to age '+r.depleteAge),
+  'Spendable wealth at plan end: '+fmt(r.endLiquid),
+  MODE==='advanced'?'Scenario: '+scenarioName():'',
+  '',
+  'NEXT',
+  'Validate the spending estimate against at least three months of real bank spending.',
+  'Re-check CPF rules and assumptions before acting.',
+  '',
+  'Planning estimate only — not financial advice. Generated locally in your browser; RetireSG receives none of your inputs.'
+ ].filter(Boolean).join('\n');
+}
+function emailSnapshot(){
+ const d=snapshotData();
+ const subject='My RetireSG retirement snapshot';
+ window.location.href='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(snapshotText(d));
+}
+function downloadSnapshot(){
+ const d=snapshotData(),text=snapshotText(d);
+ const body=esc(text).replace(/\n/g,'<br>');
+ const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My RetireSG Retirement Snapshot</title><style>body{margin:0;background:#f4f6f8;color:#152333;font-family:Arial,sans-serif}main{max-width:760px;margin:36px auto;background:#fff;padding:44px 48px;box-shadow:0 2px 14px #0001;border-radius:10px}h1{font:700 34px Georgia,serif;color:#9a681e;margin:0 0 8px}p{color:#536273;font-size:14px;line-height:1.6}.box{margin-top:26px;border-top:3px solid #c8933a;padding-top:18px;font-size:15px;line-height:1.65}@media print{body{background:#fff}main{box-shadow:none;margin:0;max-width:none;border-radius:0;padding:28px}}</style></head><body><main><h1>RetireSG</h1><p>Singapore retirement snapshot · Created locally in your browser</p><div class="box">'+body+'</div><p style="margin-top:28px;font-size:12px">Planning estimate only. Re-check CPF rules and your assumptions before acting.</p></main></body></html>';
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+ a.download='RetireSG-retirement-snapshot.html';
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
 function run(){
  const p=gather(), r=project(p);
 
@@ -672,6 +777,24 @@ function run(){
  const gap=p.ageEnd-r.depleteAge;
  document.getElementById('statusS').textContent='Your spendable wealth is exhausted '+gap+' year'+(gap===1?'':'s')+' before your plan-end. CPF LIFE ('+fmt(r.lifeM)+'/mth) continues, but won’t cover your full spending.';
  }
+
+ const spendAtRet=p.spendM*12*Math.pow(1+p.infl,Math.max(0,p.ageRet-p.ageNow));
+ const lifeCoverage=spendAtRet>0?Math.min(100,Math.round(r.lifeM*12/spendAtRet*100)):0;
+ document.getElementById('df-retire').textContent='Age '+p.ageRet;
+ document.getElementById('df-spend').textContent=fmt(p.spendM)+'/month';
+ document.getElementById('df-life-cover').textContent=lifeCoverage+'% of spend';
+ const decisionTitle=document.getElementById('decisionTitle'),decisionCopy=document.getElementById('decisionCopy');
+ const steps=document.getElementById('nextSteps');
+ if(funded){
+  decisionTitle.textContent='Your current plan supports retirement at age '+p.ageRet+'.';
+  decisionCopy.textContent='At your target spending, the model keeps your spendable wealth funded through age '+p.ageEnd+'. The job now is to make the plan resilient, not merely possible.';
+  steps.innerHTML='<div class="step-card"><span class="step-n">1</span><b>Stress-test the answer</b><p>Try Bear market and Crash at retirement. A plan that survives a bad start is more useful than a flattering base case.</p></div><div class="step-card"><span class="step-n">2</span><b>Validate the spending number</b><p>Use at least three months of actual bank spending. This one input changes the result more than most return assumptions.</p></div><div class="step-card"><span class="step-n">3</span><b>Save an annual checkpoint</b><p>Keep this snapshot, then refresh it after your next CPF statement and annual portfolio review.</p></div>';
+ }else{
+  decisionTitle.textContent='Your current plan has a gap before age '+p.ageEnd+'.';
+  decisionCopy.textContent='The model runs out of spendable wealth at age '+r.depleteAge+'. Treat this as a planning signal: the biggest levers are spending, retirement timing and savings — not a search for higher returns.';
+  steps.innerHTML='<div class="step-card"><span class="step-n">1</span><b>Validate spending first</b><p>Use actual bank spending, then separate essential costs from discretionary costs. Avoid designing around a hopeful number.</p></div><div class="step-card"><span class="step-n">2</span><b>Test the timing lever</b><p>Try a later retirement age or a smaller initial draw. A few additional saving years can materially improve the bridge to CPF LIFE.</p></div><div class="step-card"><span class="step-n">3</span><b>Use the full model</b><p>Switch to Advanced Plan to include SRS, property, mortgage, CPF LIFE top-ups and a conservative market scenario.</p></div>';
+ }
+ LATEST={p,r,funded,spendAtRet,lifeCoverage};
 
  document.getElementById('st-life').textContent=fmt(r.lifeM);
  document.getElementById('st-last').textContent=funded?'Beyond '+p.ageEnd:r.depleteAge;
@@ -716,8 +839,8 @@ function drawChart(r,p){
  }
  const ctx=cv.getContext('2d');
  const ds=[
- {label:'Liquid wealth',data:r.liq,borderColor:'#27ae60',backgroundColor:'rgba(39,174,96,.30)',fill:true,borderWidth:1.5,pointRadius:0,tension:.2},
- {label:'CPF (locked)',data:r.cpf,borderColor:'#5b8dee',backgroundColor:'rgba(91,141,238,.28)',fill:true,borderWidth:1.5,pointRadius:0,tension:.2}
+ {label:'Liquid wealth',data:r.liq,borderColor:'#27ae60',backgroundColor:'rgba(39,174,96,.30)',fill:false,borderWidth:2,pointRadius:0,tension:.2},
+ {label:'CPF (locked)',data:r.cpf,borderColor:'#5b8dee',backgroundColor:'rgba(91,141,238,.28)',fill:false,borderWidth:2,pointRadius:0,tension:.2}
  ];
  if(MODE==='advanced'&&v('propVal')>0)
  ds.push({label:'Property',data:r.prop,borderColor:'#c8933a',backgroundColor:'rgba(200,147,58,.20)',fill:true,borderWidth:1.5,pointRadius:0,tension:.2});
@@ -731,7 +854,7 @@ function drawChart(r,p){
  label:c=>c.dataset.label+': '+fmt(c.raw)}}},
  scales:{
  x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#516c8e',maxTicksLimit:9,font:{size:11}}},
- y:{stacked:true,grid:{color:'rgba(255,255,255,.05)'},
+ y:{stacked:false,grid:{color:'rgba(255,255,255,.05)'},
  ticks:{color:'#516c8e',font:{size:11},callback:v=>'$'+(v/1000).toFixed(0)+'k'}}}
  }});
  }catch(e){}
