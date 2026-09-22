@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CPF OA Drawdown Calculator | Paul Young</title>
+  <meta name="description" content="Estimate a level monthly draw from a CPF Ordinary Account under a constant interest-rate assumption. Runs entirely in your browser.">
+  <meta name="robots" content="index,follow">
+  <style>
+    :root{--bg:#081018;--panel:#101b25;--panel2:#142331;--text:#edf4f8;--muted:#9aafbf;--amber:#ffbf4b;--teal:#55d6c2;--red:#ff6f70;--line:#2b4356}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 75% 0,#172d3d 0,#081018 48%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.55}
+    .wrap{width:min(1040px,calc(100% - 32px));margin:auto;padding:26px 0 54px}.back{display:inline-block;color:#b8cad7;font-size:.9rem;margin-bottom:28px}.back:hover{color:#fff}.eyebrow{color:var(--amber);font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.hero{max-width:760px;margin-bottom:25px}.hero h1{font-size:clamp(2.25rem,6vw,4rem);letter-spacing:-.045em;line-height:1.04;margin:.35rem 0 .85rem}.hero p{color:var(--muted);font-size:1.08rem;margin:0}.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}.card{background:rgba(16,27,37,.96);border:1px solid var(--line);border-radius:16px;padding:21px}.card h2{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:#c6d3dc;margin:0 0 17px}.field{margin:0 0 16px}.field:last-child{margin-bottom:0}.field label{display:block;font-size:.82rem;font-weight:750;margin-bottom:7px}.hint{font-size:.78rem;color:var(--muted);margin-top:5px}.input{display:flex;align-items:center;background:#0b1620;border:1px solid #355269;border-radius:10px;padding:0 12px}.input:focus-within{border-color:var(--teal);box-shadow:0 0 0 3px rgba(85,214,194,.12)}.input span{color:#9db0bf;font-weight:700}.input input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font:700 1.2rem/1.2 inherit;padding:12px 8px;text-align:right}.choice{display:flex;gap:8px;flex-wrap:wrap}.choice button{border:1px solid #355269;background:#132331;color:#d9e5ed;padding:9px 12px;border-radius:999px;font-weight:700;cursor:pointer;min-height:40px}.choice button.active{background:var(--teal);border-color:var(--teal);color:#06201b}.choice button:focus-visible{outline:3px solid rgba(85,214,194,.45);outline-offset:2px}.result{background:linear-gradient(135deg,rgba(85,214,194,.15),rgba(16,27,37,.96) 58%);border-color:rgba(85,214,194,.42)}.kicker{font-size:.78rem;color:#a8c8c5;font-weight:750;letter-spacing:.08em;text-transform:uppercase}.payout{font-size:clamp(2.7rem,7vw,4.5rem);line-height:1;margin:.35rem 0 .5rem;color:#fff;letter-spacing:-.05em}.result p{color:#c4d1d9;margin:0}.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}.fact{background:rgba(5,15,24,.45);border:1px solid rgba(157,191,209,.2);border-radius:10px;padding:11px}.fact b{display:block;font-size:.76rem;color:#9eb1c0;text-transform:uppercase;letter-spacing:.06em}.fact span{display:block;font-size:1.05rem;font-weight:750;margin-top:3px}.bar{height:10px;background:#1d3444;border-radius:999px;overflow:hidden;margin-top:20px}.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--amber));width:100%}.note{font-size:.83rem;color:#b5c4ce;margin-top:9px}.notice{margin-top:18px;border-left:4px solid var(--amber);padding:14px 16px;background:#172533;color:#d6e0e6;border-radius:0 11px 11px 0}.notice strong{color:#fff}.guide{margin-top:18px}.guide h2{font-size:1.12rem;letter-spacing:0;text-transform:none;color:#fff}.guide p,.guide li{color:#bac9d3}.guide ul{padding-left:20px}.sources a{color:#92d7ff}.privacy{font-size:.82rem;color:#8da2b1;margin-top:18px;text-align:center}.bad{color:#ffb0b0}@media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{width:min(100% - 24px,1040px);padding-top:18px}.facts{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="finance.html">← Back to Finance</a>
+    <section class="hero">
+      <div class="eyebrow">Singapore CPF planning tool</div>
+      <h1>CPF OA drawdown calculator</h1>
+      <p>Estimate a <strong>level monthly withdrawal</strong> from an Ordinary Account for a chosen period. It uses a constant OA rate and annual interest crediting under the timing assumption stated below.</p>
+    </section>
+    <div class="grid">
+      <section class="card" aria-label="Calculator inputs">
+        <h2>Your planning inputs</h2>
+        <div class="field"><label for="balance">Withdrawable OA amount</label><div class="choice" id="balanceChoices"><button type="button" data-balance="100000">S$100k</button><button type="button" data-balance="250000">S$250k</button><button type="button" class="active" data-balance="500000">S$500k</button><button type="button" data-balance="750000">S$750k</button><button type="button" data-balance="1000000">S$1m</button></div><div class="input" style="margin-top:8px"><span>S$</span><input id="balance" type="number" min="0" step="1000" value="500000"></div><div class="hint">Choose a common amount or type your own. Enter only the amount shown as withdrawable in your CPF Retirement Dashboard — not your displayed OA balance by default.</div></div>
+        <div class="field"><label for="startAge">Withdrawal starts at age</label><div class="choice" id="ageChoices"><button type="button" data-age="55">55</button><button type="button" class="active" data-age="60">60</button><button type="button" data-age="65">65</button></div><div class="input" style="margin-top:8px"><input id="startAge" type="number" min="55" max="100" step="1" value="60"><span>years</span></div><div class="hint">Age is a planning label only. It does not determine legal withdrawal eligibility.</div></div>
+        <div class="field"><label for="years">Drawdown length</label><div class="choice" id="yearChoices"><button type="button" data-years="10">10 yrs</button><button type="button" data-years="15">15 yrs</button><button type="button" data-years="20">20 yrs</button><button type="button" data-years="25">25 yrs</button><button type="button" class="active" data-years="30">30 yrs</button></div><div class="input" style="margin-top:8px"><input id="years" type="number" min="1" max="60" step="1" value="30"><span>years</span></div><div class="hint">Choose a common period or type your own. The model targets an end balance of S$0 after the final monthly withdrawal.</div></div>
+        <div class="field"><label for="rate">Assumed OA base interest rate</label><div class="input"><input id="rate" type="number" min="0" max="10" step="0.01" value="2.50"><span>% p.a.</span></div><div class="hint">Default: 2.50% p.a. — the published OA rate for 1 July–30 September 2026. CPF rates are reviewed quarterly.</div></div>
+      </section>
+      <section class="card result" aria-live="polite">
+        <div class="kicker">Illustrative monthly draw from age <span id="ageOut">60</span></div>
+        <div class="payout" id="monthlyOut">S$1,964</div>
+        <p id="headline">for 30 years, assuming a constant 2.50% OA base rate.</p>
+        <div class="facts"><div class="fact"><b>Total withdrawals</b><span id="totalOut">S$707,089</span></div><div class="fact"><b>Modelled interest</b><span id="interestOut">S$207,089</span></div><div class="fact"><b>Final withdrawal age</b><span id="endAgeOut">90</span></div><div class="fact"><b>Ending balance</b><span id="endingOut">S$0</span></div></div>
+        <div class="bar"><i></i></div><div class="note" id="methodOut">Interest is accrued monthly on the post-withdrawal end-of-month balance and credited to the OA once each year.</div>
+      </section>
+    </div>
+    <section class="card notice">
+      <strong>Eligibility comes first.</strong> At 55, CPF first creates the Retirement Account and transfers SA, then OA, up to the applicable Full Retirement Sum. For members born in 1958 or later, only S$5,000 is generally unconditional at 55; OA/SA above the FRS may be withdrawable. Use your <a href="https://www.cpf.gov.sg/member/retirement-income/retirement-withdrawals/withdrawing-for-immediate-retirement-needs" target="_blank" rel="noopener">CPF Retirement Dashboard</a> as the source of truth.
+    </section>
+    <section class="card guide">
+      <h2>Important CPF treatment</h2>
+      <ul>
+        <li><strong>Extra interest is not extra OA drawdown yield.</strong> For members 55 and above, CPF currently pays extra interest on the first S$30,000 of combined CPF balances and another 1% on the next S$30,000, subject to an OA cap of S$20,000. The extra interest earned on OA goes to the RA (or SA where applicable), not back into OA. It is therefore excluded from this OA-only drawdown calculation.</li>
+        <li><strong>This is not an annuity or CPF LIFE estimate.</strong> It is a fixed-term depletion illustration: it deliberately reaches zero after the selected term. CPF LIFE is designed to pay for life and works differently.</li>
+        <li><strong>Timing convention:</strong> to match a conservative end-of-month withdrawal assumption, the model deducts the draw first each month, accrues that month’s interest on the remaining month-end balance, and credits the accumulated interest each December. CPF Board’s operational calculation and your actual withdrawal date/settings prevail.</li>
+        <li><strong>Private by design:</strong> calculations happen only in your browser. This page has no account login, analytics, server storage or data upload.</li>
+      </ul>
+      <p class="sources"><strong>Official references (checked 22 September 2026):</strong> <a href="https://www.cpf.gov.sg/member/infohub/news/news-releases/cpf-interest-rates-from-1-july-to-30-september-2026" target="_blank" rel="noopener">CPF interest rates, Jul–Sep 2026</a> · <a href="https://www.cpf.gov.sg/member/infohub/educational-resources/can-you-withdraw-your-cpf-at-55" target="_blank" rel="noopener">CPF withdrawals at 55</a>.</p>
+    </section>
+    <p class="privacy">Planning education only — not financial, legal or CPF withdrawal advice. Recheck current CPF rules and your personal withdrawable amount before acting.</p>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    const money=n=>'S$'+Math.round(Math.max(0,n)).toLocaleString('en-SG');
+    function input(id){const x=parseFloat($(id).value);return Number.isFinite(x)?x:0}
+    // Monthly interest accrues after the chosen end-of-month draw; accrued interest is credited once each December.
+    function terminalBalance(principal, annualRate, months, payment){
+      let b=principal, accrued=0;
+      for(let month=1;month<=months;month++){
+        b-=payment;
+        accrued+=Math.max(0,b)*(annualRate/12);
+        if(month%12===0){b+=accrued;accrued=0}
+      }
+      return b;
+    }
+    function solvePayment(principal, annualRate, months){
+      if(principal<=0||months<=0)return 0;
+      let low=0,high=principal;
+      for(let i=0;i<100;i++){const mid=(low+high)/2;if(terminalBalance(principal,annualRate,months,mid)>0)low=mid;else high=mid}
+      return (low+high)/2;
+    }
+    function update(){
+      const principal=Math.max(0,input('balance')), years=Math.max(1,Math.floor(input('years'))), age=Math.max(55,Math.floor(input('startAge'))), rate=Math.max(0,input('rate'))/100, months=years*12;
+      const payment=solvePayment(principal,rate,months), total=payment*months, interest=total-principal, ending=terminalBalance(principal,rate,months,payment);
+      $('ageOut').textContent=age;$('monthlyOut').textContent=money(payment);$('headline').textContent=`for ${years} years, assuming a constant ${(rate*100).toFixed(2)}% OA base rate.`;
+      $('totalOut').textContent=money(total);$('interestOut').textContent=money(interest);$('endAgeOut').textContent=age+years;$('endingOut').textContent=money(ending);
+      document.querySelectorAll('#ageChoices button').forEach(b=>b.classList.toggle('active',Number(b.dataset.age)===age));
+      document.querySelectorAll('#yearChoices button').forEach(b=>b.classList.toggle('active',Number(b.dataset.years)===years));
+      document.querySelectorAll('#balanceChoices button').forEach(b=>b.classList.toggle('active',Number(b.dataset.balance)===principal));
+    }
+    document.querySelectorAll('input').forEach(el=>el.addEventListener('input',update));
+    document.querySelectorAll('#ageChoices button').forEach(b=>b.addEventListener('click',()=>{$('startAge').value=b.dataset.age;update()}));
+    document.querySelectorAll('#yearChoices button').forEach(b=>b.addEventListener('click',()=>{$('years').value=b.dataset.years;update()}));
+    document.querySelectorAll('#balanceChoices button').forEach(b=>b.addEventListener('click',()=>{$('balance').value=b.dataset.balance;update()}));
+    update();
+  </script>
+</body>
+</html>
